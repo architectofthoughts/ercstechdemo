@@ -1,0 +1,5 @@
+{
+  "name": "Gacha Snapshot System",
+  "description": "A timeline UI for tracking character acquisitions in a game, featuring Gemini-powered image analysis and log generation.",
+  "requestFramePermissions": []
+}
