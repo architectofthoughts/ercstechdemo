@@ -79,5 +79,15 @@ export const MODE_CONFIG = [
     id: 'extraction',
     title: "Extraction Protocol",
     description: "액트 클리어 후 포인트로 다음 런의 이점 구매"
+  },
+  {
+    id: 'dna',
+    title: "DNA Synthesis",
+    description: "DNA 파츠를 조합하여 문장을 만들고 능력 획득"
+  },
+  {
+    id: 'event',
+    title: "Random Encounter",
+    description: "선택에 따라 결과가 달라지는 무작위 이벤트 (2단계)"
   }
 ] as const;

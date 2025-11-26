@@ -13,8 +13,10 @@ import RewardScreen from './components/RewardScreen';
 import ExtractionScreen from './components/ExtractionScreen';
 import ActClearScreen from './components/ActClearScreen';
 import MemorialApp from './memorial/App';
+import DNAScreen from './components/DNAScreen';
+import EventDemo from './components/EventDemo';
 
-type DemoMode = 'select' | 'finale' | 'multiPlay' | 'spinning' | 'destinyDraw' | 'map' | 'characterSelect' | 'memorial' | 'reward' | 'extraction' | 'actClear';
+type DemoMode = 'select' | 'finale' | 'multiPlay' | 'spinning' | 'destinyDraw' | 'map' | 'characterSelect' | 'memorial' | 'reward' | 'extraction' | 'actClear' | 'dna' | 'event';
 
 interface DragState {
   isActive: boolean;
@@ -486,6 +488,14 @@ const App: React.FC = () => {
 
     if (demoMode === 'extraction') {
       return <ExtractionScreen onBackToMenu={() => resetGame('select')} />;
+    }
+
+    if (demoMode === 'dna') {
+      return <DNAScreen onBackToMenu={() => resetGame('select')} />;
+    }
+
+    if (demoMode === 'event') {
+      return <EventDemo onBackToMenu={() => resetGame('select')} />;
     }
 
     return (
