@@ -46,9 +46,10 @@ const NOUNS: DNAPart[] = [
 // --- Component ---
 interface DNAScreenProps {
     onBackToMenu: () => void;
+    onComplete?: (dnaCard: { name: string; description: string }) => void;
 }
 
-const DNAScreen: React.FC<DNAScreenProps> = ({ onBackToMenu }) => {
+const DNAScreen: React.FC<DNAScreenProps> = ({ onBackToMenu, onComplete }) => {
     // Changed to 2 slots for adjectives
     const [slots, setSlots] = useState<(DNAPart | null)[]>([null, null]);
     const [nounSlot, setNounSlot] = useState<DNAPart | null>(null);
@@ -220,9 +221,9 @@ const DNAScreen: React.FC<DNAScreenProps> = ({ onBackToMenu }) => {
                                     <div className="flex flex-col items-center">
                                         <span className="text-xs tracking-widest text-zinc-500 uppercase">등급</span>
                                         <span className={`text-5xl font-bold ${result.rank === 'S' ? 'text-yellow-400 drop-shadow-[0_0_15px_rgba(250,204,21,0.8)]' :
-                                                result.rank === 'A' ? 'text-purple-400' :
-                                                    result.rank === 'B' ? 'text-blue-400' :
-                                                        'text-zinc-400'
+                                            result.rank === 'A' ? 'text-purple-400' :
+                                                result.rank === 'B' ? 'text-blue-400' :
+                                                    'text-zinc-400'
                                             }`}>{result.rank}</span>
                                     </div>
 
@@ -234,6 +235,18 @@ const DNAScreen: React.FC<DNAScreenProps> = ({ onBackToMenu }) => {
                                         <span className="text-sm text-zinc-400">{result.description}</span>
                                     </div>
                                 </div>
+
+                                {onComplete && (
+                                    <motion.button
+                                        initial={{ opacity: 0, y: 10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: 0.5 }}
+                                        onClick={() => onComplete({ name: result.reward, description: result.description })}
+                                        className="mt-8 px-12 py-3 bg-botw-blue text-black font-bold tracking-widest hover:bg-white transition-colors shadow-[0_0_20px_rgba(77,232,254,0.4)]"
+                                    >
+                                        DNA 확정 및 덱 생성
+                                    </motion.button>
+                                )}
                             </motion.div>
                         ) : (
                             <motion.div

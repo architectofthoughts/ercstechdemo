@@ -10,6 +10,8 @@ export enum CardType {
   ATTACK,
   SKILL,
   POWER,
+  STATUS,
+  CURSE,
 }
 
 export interface Card {

@@ -89,5 +89,10 @@ export const MODE_CONFIG = [
     id: 'event',
     title: "Random Encounter",
     description: "선택에 따라 결과가 달라지는 무작위 이벤트 (2단계)"
+  },
+  {
+    id: 'actPlay',
+    title: "Act Play Demo",
+    description: "액트 선택 -> 맵 -> 전투 -> 보상으로 이어지는 전체 흐름"
   }
 ] as const;

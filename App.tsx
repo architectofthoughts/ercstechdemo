@@ -15,8 +15,9 @@ import ActClearScreen from './components/ActClearScreen';
 import MemorialApp from './memorial/App';
 import DNAScreen from './components/DNAScreen';
 import EventDemo from './components/EventDemo';
+import ActSelectScreen from './components/ActSelectScreen';
 
-type DemoMode = 'select' | 'finale' | 'multiPlay' | 'spinning' | 'destinyDraw' | 'map' | 'characterSelect' | 'memorial' | 'reward' | 'extraction' | 'actClear' | 'dna' | 'event';
+type DemoMode = 'select' | 'finale' | 'multiPlay' | 'spinning' | 'destinyDraw' | 'map' | 'characterSelect' | 'memorial' | 'reward' | 'extraction' | 'actClear' | 'dna' | 'event' | 'actPlay';
 
 interface DragState {
   isActive: boolean;
@@ -59,6 +60,9 @@ const App: React.FC = () => {
   const swipeState = useRef({ isHolding: false, startX: 0, startTime: 0 });
   const finaleTriggerTimeout = useRef<number | null>(null);
   const deckTriggerTimeout = useRef<number | null>(null);
+
+  // Act Play Demo State
+  const [actPlayStep, setActPlayStep] = useState<'SELECT_ACT' | 'MAP' | 'BATTLE' | 'REWARD'>('SELECT_ACT');
 
   // Visual feedback for combat actions
   const [combatLog, setCombatLog] = useState<string | null>(null);
@@ -111,10 +115,11 @@ const App: React.FC = () => {
     if (mode === 'select') {
       setDemoMode('select');
     }
+    setActPlayStep('SELECT_ACT'); // Reset Act Play step
   }, []);
 
   const setupFavorableConditions = () => {
-    if (demoMode === 'reward') {
+    if (demoMode === 'reward' || demoMode === 'actPlay') {
       setEnemies([{
         id: 'dying_guardian',
         hp: 1,
@@ -479,8 +484,49 @@ const App: React.FC = () => {
       );
     }
 
+    if (demoMode === 'actPlay') {
+      if (actPlayStep === 'SELECT_ACT') {
+        return (
+          <ActSelectScreen
+            onSelectAct={(actId) => {
+              if (actId === 1) setActPlayStep('MAP');
+            }}
+            onBackToMenu={() => resetGame('select')}
+          />
+        );
+      }
+      if (actPlayStep === 'MAP') {
+        return (
+          <MapDemo
+            onBackToMenu={() => resetGame('select')}
+            onNodeSelect={(type) => {
+              if (type === 'battle') {
+                setActPlayStep('BATTLE');
+                setGameState(GameState.BATTLE_NORMAL);
+                setEnemies(initialEnemies); // Reset enemies for battle
+                setCardsInHand(initialCards);
+              }
+            }}
+          />
+        );
+      }
+      if (actPlayStep === 'BATTLE') {
+        if (gameState === GameState.VICTORY) {
+          // Auto transition to reward after victory in Act Play
+          // But BattleScene handles victory screen internally? 
+          // Wait, renderContent checks gameState === VICTORY below.
+          // We need to intercept that or let it fall through.
+          // If gameState is VICTORY, the below block handles it.
+          // But we want to show RewardScreen specifically for Act Play.
+        }
+      }
+      if (actPlayStep === 'REWARD') {
+        return <RewardScreen onBackToMenu={() => resetGame('select')} />;
+      }
+    }
+
     if (gameState === GameState.VICTORY) {
-      if (demoMode === 'reward') {
+      if (demoMode === 'reward' || (demoMode === 'actPlay' && actPlayStep === 'BATTLE')) {
         return <RewardScreen onBackToMenu={() => resetGame('select')} />;
       }
       return <VictoryScreen onBackToMenu={() => resetGame('select')} />;

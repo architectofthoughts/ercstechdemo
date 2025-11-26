@@ -38,8 +38,14 @@ const PREMADE_MAP_NODES: MapNode[] = [
     { id: '0-2', type: 'battle', x: 80, level: 0, parents: [] },
 ];
 
-const MapDemo: React.FC<{ onBackToMenu: () => void, onExtraction?: () => void }> = ({ onBackToMenu, onExtraction }) => {
+const MapDemo: React.FC<{ onBackToMenu: () => void, onExtraction?: () => void, onNodeSelect?: (nodeType: string) => void }> = ({ onBackToMenu, onExtraction, onNodeSelect }) => {
     const [hoveredNode, setHoveredNode] = useState<MapNode | null>(null);
+
+    const handleNodeClick = (node: MapNode) => {
+        if (onNodeSelect) {
+            onNodeSelect(node.type);
+        }
+    };
 
     const getNodeIcon = (type: string) => {
         switch (type) {
@@ -149,6 +155,7 @@ const MapDemo: React.FC<{ onBackToMenu: () => void, onExtraction?: () => void }>
                                 style={{ left: x, top: y }}
                                 onMouseEnter={() => setHoveredNode(node)}
                                 onMouseLeave={() => setHoveredNode(null)}
+                                onClick={() => handleNodeClick(node)}
                             >
                                 {/* Node Visual */}
                                 <div className={`
