@@ -409,37 +409,44 @@ const App: React.FC = () => {
             </div>
           </div>
 
-          {/* List Container */}
-          <div className="w-full flex flex-col gap-3 pb-20">
-            <div className="w-full h-px bg-botw-uiBorder mb-2 opacity-50"></div>
-
-            {MODE_CONFIG.map((mode) => (
-              <div
-                key={mode.id}
-                onClick={() => selectDemoMode(mode.id as any)}
-                className={`group relative w-full py-6 px-8 bg-botw-uiDark/40 border border-botw-uiBorder hover:border-botw-blue hover:bg-botw-uiDark/70 flex items-center cursor-pointer transition-all duration-300 flex-shrink-0`}
-              >
-                {/* Content */}
-                <div className="flex-1 flex flex-col justify-center relative z-10">
-                  <h2 className={`${THEME.fonts.heading} ${THEME.textSizes.cardTitle} ${THEME.colors.primary} group-hover:text-botw-blue transition-colors mb-1`}>
-                    {mode.title}
-                  </h2>
-                  <p className={`${THEME.fonts.body} text-sm text-zinc-400 group-hover:text-zinc-300 transition-colors`}>
-                    {mode.description}
-                  </p>
+          <div className="w-full flex flex-col gap-8 pb-20">
+            {['Combat Demo', 'Act Map Demo', 'Flow Demo', 'ETC'].map((category) => (
+              <div key={category} className="w-full">
+                <div className="flex items-center gap-4 mb-4 opacity-80">
+                  <div className="h-px flex-1 bg-botw-uiBorder"></div>
+                  <h3 className={`${THEME.fonts.heading} text-botw-gold text-sm tracking-[0.2em] uppercase`}>{category}</h3>
+                  <div className="h-px flex-1 bg-botw-uiBorder"></div>
                 </div>
 
-                {/* Right Side Arrow */}
-                <div className="pl-6 text-botw-blue opacity-0 group-hover:opacity-100 transform translate-x-[-10px] group-hover:translate-x-0 transition-all duration-300">
-                  <PlayArrowIcon className="w-6 h-6" />
-                </div>
+                <div className="flex flex-col gap-3">
+                  {MODE_CONFIG.filter((m) => m.category === category).map((mode) => (
+                    <div
+                      key={mode.id}
+                      onClick={() => selectDemoMode(mode.id as any)}
+                      className={`group relative w-full py-6 px-8 bg-botw-uiDark/40 border border-botw-uiBorder hover:border-botw-blue hover:bg-botw-uiDark/70 flex items-center cursor-pointer transition-all duration-300 flex-shrink-0`}
+                    >
+                      {/* Content */}
+                      <div className="flex-1 flex flex-col justify-center relative z-10">
+                        <h2 className={`${THEME.fonts.heading} ${THEME.textSizes.cardTitle} ${THEME.colors.primary} group-hover:text-botw-blue transition-colors mb-1`}>
+                          {mode.title}
+                        </h2>
+                        <p className={`${THEME.fonts.body} text-sm text-zinc-400 group-hover:text-zinc-300 transition-colors`}>
+                          {mode.description}
+                        </p>
+                      </div>
 
-                {/* Hover Effect Overlay */}
-                <div className="absolute inset-0 bg-botw-blue/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+                      {/* Right Side Arrow */}
+                      <div className="pl-6 text-botw-blue opacity-0 group-hover:opacity-100 transform translate-x-[-10px] group-hover:translate-x-0 transition-all duration-300">
+                        <PlayArrowIcon className="w-6 h-6" />
+                      </div>
+
+                      {/* Hover Effect Overlay */}
+                      <div className="absolute inset-0 bg-botw-blue/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+                    </div>
+                  ))}
+                </div>
               </div>
             ))}
-
-            <div className="w-full h-px bg-botw-uiBorder mt-2 opacity-50"></div>
           </div>
 
           {/* Footer */}

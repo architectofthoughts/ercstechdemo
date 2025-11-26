@@ -35,64 +35,83 @@ export const THEME = {
 };
 
 export const MODE_CONFIG = [
+  // --- Combat Demo ---
   {
     id: 'finale',
     title: "Secret Art: Finale Strike",
-    description: "빈사가 된 적들에게 모든 카드를 던져 호쾌한 마무리"
+    description: "빈사가 된 적들에게 모든 카드를 던져 호쾌한 마무리",
+    category: "Combat Demo"
   },
   {
     id: 'multiPlay',
     title: "Synchronized Assault",
-    description: "동일한 카드를 모아서 한번에 사용"
+    description: "동일한 카드를 모아서 한번에 사용",
+    category: "Combat Demo"
   },
   {
     id: 'spinning',
     title: "Inventory Sorting",
-    description: "손패의 카드를 비용 순으로 정렬"
+    description: "손패의 카드를 비용 순으로 정렬",
+    category: "Combat Demo"
   },
   {
     id: 'destinyDraw',
     title: "Destiny Draw",
-    description: "모든 패를 버리고 운명의 드로우 (전투당 1회)"
+    description: "모든 패를 버리고 운명의 드로우 (전투당 1회)",
+    category: "Combat Demo"
   },
+
+  // --- Act Map Demo ---
   {
     id: 'reward',
     title: "Victory Rewards",
-    description: "전투 승리 후 보상 획득 및 카드 선택 연출"
+    description: "전투 승리 후 보상 획득 및 카드 선택 연출",
+    category: "Act Map Demo"
   },
   {
     id: 'map',
     title: "Procedural Map Tree",
-    description: "이벤트, 전투, 휴식, 보스로 이어지는 절차적 맵 구조"
-  },
-  {
-    id: 'characterSelect',
-    title: "Character Select",
-    description: "10명의 캐릭터 중 2명을 선택하여 스쿼드 구성"
-  },
-  {
-    id: 'memorial',
-    title: "Memorial System",
-    description: "기억의 조각을 모아 스냅샷을 기록하는 시스템"
+    description: "이벤트, 전투, 휴식, 보스로 이어지는 절차적 맵 구조",
+    category: "Act Map Demo"
   },
   {
     id: 'extraction',
     title: "Extraction Protocol",
-    description: "액트 클리어 후 포인트로 다음 런의 이점 구매"
+    description: "액트 클리어 후 포인트로 다음 런의 이점 구매",
+    category: "Act Map Demo"
   },
   {
     id: 'dna',
     title: "DNA Synthesis",
-    description: "DNA 파츠를 조합하여 문장을 만들고 능력 획득"
+    description: "DNA 파츠를 조합하여 문장을 만들고 능력 획득",
+    category: "Act Map Demo"
   },
   {
     id: 'event',
     title: "Random Encounter",
-    description: "선택에 따라 결과가 달라지는 무작위 이벤트 (2단계)"
+    description: "선택에 따라 결과가 달라지는 무작위 이벤트 (2단계)",
+    category: "Act Map Demo"
+  },
+
+  // --- Flow Demo ---
+  {
+    id: 'characterSelect',
+    title: "Character Select",
+    description: "10명의 캐릭터 중 2명을 선택하여 스쿼드 구성",
+    category: "Flow Demo"
   },
   {
     id: 'actPlay',
     title: "Act Play Demo",
-    description: "액트 선택 -> 맵 -> 전투 -> 보상으로 이어지는 전체 흐름"
+    description: "액트 선택 -> 맵 -> 전투 -> 보상으로 이어지는 전체 흐름",
+    category: "Flow Demo"
+  },
+
+  // --- ETC ---
+  {
+    id: 'memorial',
+    title: "Memorial System",
+    description: "기억의 조각을 모아 스냅샷을 기록하는 시스템",
+    category: "ETC"
   }
 ] as const;
