@@ -35,34 +35,39 @@ export const THEME = {
 };
 
 export const MODE_CONFIG = [
-    {
-        id: 'finale',
-        title: "Secret Art: Finale Strike",
-        description: "빈사가 된 적들에게 모든 카드를 던져 호쾌한 마무리"
-    },
-    {
-        id: 'multiPlay',
-        title: "Synchronized Assault",
-        description: "동일한 카드를 모아서 한번에 사용"
-    },
-    {
-        id: 'spinning',
-        title: "Inventory Sorting",
-        description: "손패의 카드를 비용 순으로 정렬"
-    },
-    {
-        id: 'map',
-        title: "Procedural Map Tree",
-        description: "이벤트, 전투, 휴식, 보스로 이어지는 절차적 맵 구조"
-    },
-    {
-        id: 'characterSelect',
-        title: "Character Select",
-        description: "10명의 캐릭터 중 2명을 선택하여 스쿼드 구성"
-    },
-    {
-        id: 'memorial',
-        title: "Memorial System",
-        description: "기억의 조각을 모아 스냅샷을 기록하는 시스템"
-    }
+  {
+    id: 'finale',
+    title: "Secret Art: Finale Strike",
+    description: "빈사가 된 적들에게 모든 카드를 던져 호쾌한 마무리"
+  },
+  {
+    id: 'multiPlay',
+    title: "Synchronized Assault",
+    description: "동일한 카드를 모아서 한번에 사용"
+  },
+  {
+    id: 'spinning',
+    title: "Inventory Sorting",
+    description: "손패의 카드를 비용 순으로 정렬"
+  },
+  {
+    id: 'destinyDraw',
+    title: "Destiny Draw",
+    description: "모든 패를 버리고 운명의 드로우 (전투당 1회)"
+  },
+  {
+    id: 'map',
+    title: "Procedural Map Tree",
+    description: "이벤트, 전투, 휴식, 보스로 이어지는 절차적 맵 구조"
+  },
+  {
+    id: 'characterSelect',
+    title: "Character Select",
+    description: "10명의 캐릭터 중 2명을 선택하여 스쿼드 구성"
+  },
+  {
+    id: 'memorial',
+    title: "Memorial System",
+    description: "기억의 조각을 모아 스냅샷을 기록하는 시스템"
+  }
 ] as const;

@@ -11,7 +11,7 @@ import { APP_TEXTS, THEME, MODE_CONFIG } from './themeConfig';
 
 import MemorialApp from './memorial/App';
 
-type DemoMode = 'select' | 'finale' | 'multiPlay' | 'spinning' | 'map' | 'characterSelect' | 'memorial';
+type DemoMode = 'select' | 'finale' | 'multiPlay' | 'spinning' | 'destinyDraw' | 'map' | 'characterSelect' | 'memorial';
 
 interface DragState {
   isActive: boolean;
@@ -20,6 +20,11 @@ interface DragState {
 }
 
 interface FinaleDragState {
+  isActive: boolean;
+  position: { x: number; y: number };
+}
+
+interface DeckDragState {
   isActive: boolean;
   position: { x: number; y: number };
 }
@@ -40,10 +45,15 @@ const App: React.FC = () => {
   const [finaleDragState, setFinaleDragState] = useState<FinaleDragState>({ isActive: false, position: { x: 0, y: 0 } });
   const [finaleExplosionOrigin, setFinaleExplosionOrigin] = useState<{ x: number, y: number } | null>(null);
 
+  const [deckDragState, setDeckDragState] = useState<DeckDragState>({ isActive: false, position: { x: 0, y: 0 } });
+  const [isDestinyDrawUsed, setIsDestinyDrawUsed] = useState(false);
+  const [isDestinyDiscarding, setIsDestinyDiscarding] = useState(false);
+
   const [isHandSpinning, setIsHandSpinning] = useState(false);
   const [heldCardId, setHeldCardId] = useState<number | null>(null);
   const swipeState = useRef({ isHolding: false, startX: 0, startTime: 0 });
   const finaleTriggerTimeout = useRef<number | null>(null);
+  const deckTriggerTimeout = useRef<number | null>(null);
 
   // Visual feedback for combat actions
   const [combatLog, setCombatLog] = useState<string | null>(null);
@@ -72,7 +82,10 @@ const App: React.FC = () => {
     setGameState(GameState.BATTLE_NORMAL);
     setDragState({ isActive: false, cards: [], position: { x: 0, y: 0 } });
     setFinaleDragState({ isActive: false, position: { x: 0, y: 0 } });
+    setDeckDragState({ isActive: false, position: { x: 0, y: 0 } });
     setFinaleExplosionOrigin(null);
+    setIsDestinyDrawUsed(false);
+    setIsDestinyDiscarding(false);
     setIsHandSpinning(false);
     setHeldCardId(null);
     setCombatLog(null);
@@ -96,6 +109,10 @@ const App: React.FC = () => {
       setCardsInHand(spinningDemoCards);
       setPlayerMana(3);
       setPlayerMaxMana(3);
+    } else if (demoMode === 'destinyDraw') {
+      setCardsInHand(initialCards);
+      setPlayerMana(3);
+      setPlayerMaxMana(3);
     }
   };
 
@@ -109,6 +126,28 @@ const App: React.FC = () => {
     }, 2500);
   };
 
+  const executeDestinyDraw = () => {
+    setIsDestinyDrawUsed(true);
+    setIsDestinyDiscarding(true);
+    setCombatLog("Destiny Draw!");
+
+    setTimeout(() => {
+      setCardsInHand([]);
+      setIsDestinyDiscarding(false);
+
+      setTimeout(() => {
+        const destinyCard: Card = {
+          id: Date.now(),
+          name: "DESTINY_DRAW",
+          cost: 0,
+          description: "Deal 50 damage. Draw 2 cards.",
+          type: CardType.ATTACK
+        };
+        setCardsInHand([destinyCard]);
+      }, 200);
+    }, 800);
+  };
+
   const handleFinaleTriggerStart = (e: React.MouseEvent) => {
     if (!isFinaleReady || gameState !== GameState.BATTLE_FINALE_READY) return;
 
@@ -120,6 +159,20 @@ const App: React.FC = () => {
         position: { x: clientX, y: clientY }
       });
       finaleTriggerTimeout.current = null;
+    }, 300);
+  };
+
+  const handleDeckTriggerStart = (e: React.MouseEvent) => {
+    if (demoMode !== 'destinyDraw' || isDestinyDrawUsed || cardsInHand.length < 3) return;
+
+    const { clientX, clientY } = e;
+
+    deckTriggerTimeout.current = window.setTimeout(() => {
+      setDeckDragState({
+        isActive: true,
+        position: { x: clientX, y: clientY }
+      });
+      deckTriggerTimeout.current = null;
     }, 300);
   };
 
@@ -233,6 +286,10 @@ const App: React.FC = () => {
       setFinaleDragState(prev => ({ ...prev, position: { x: e.clientX, y: e.clientY } }));
     }
 
+    if (deckDragState.isActive) {
+      setDeckDragState(prev => ({ ...prev, position: { x: e.clientX, y: e.clientY } }));
+    }
+
     if (demoMode === 'spinning' && swipeState.current.isHolding) {
       const dx = e.clientX - swipeState.current.startX;
       const dt = Date.now() - swipeState.current.startTime;
@@ -254,6 +311,11 @@ const App: React.FC = () => {
       finaleTriggerTimeout.current = null;
     }
 
+    if (deckTriggerTimeout.current) {
+      clearTimeout(deckTriggerTimeout.current);
+      deckTriggerTimeout.current = null;
+    }
+
     if (dragState.isActive) {
       setDragState({ isActive: false, cards: [], position: { x: 0, y: 0 } });
     }
@@ -265,6 +327,14 @@ const App: React.FC = () => {
       } else {
         setFinaleDragState({ isActive: false, position: { x: 0, y: 0 } });
       }
+    }
+
+    if (deckDragState.isActive) {
+      const screenHeight = window.innerHeight;
+      if (e.clientY > screenHeight * 0.6) {
+        executeDestinyDraw();
+      }
+      setDeckDragState({ isActive: false, position: { x: 0, y: 0 } });
     }
 
     if (swipeState.current.isHolding) {
@@ -371,7 +441,7 @@ const App: React.FC = () => {
 
     return (
       <BattleScene
-        demoMode={demoMode as 'finale' | 'multiPlay' | 'spinning'}
+        demoMode={demoMode as 'finale' | 'multiPlay' | 'spinning' | 'destinyDraw'}
         gameState={gameState}
         enemies={enemies}
         playerMana={playerMana}
@@ -379,12 +449,16 @@ const App: React.FC = () => {
         cardsInHand={cardsInHand}
         dragState={dragState}
         finaleDragState={finaleDragState}
+        deckDragState={deckDragState}
+        isDestinyDrawUsed={isDestinyDrawUsed}
+        isDestinyDiscarding={isDestinyDiscarding}
         finaleExplosionOrigin={finaleExplosionOrigin}
         draggedCardIds={draggedCardIds}
         isHandSpinning={isHandSpinning}
         heldCardId={heldCardId}
         combatLog={combatLog}
         onFinaleTriggerStart={handleFinaleTriggerStart}
+        onDeckTriggerStart={handleDeckTriggerStart}
         onSetupFavorable={setupFavorableConditions}
         onCardLongPress={handleCardLongPress}
         onDropOnEnemies={handleDropOnEnemies}
