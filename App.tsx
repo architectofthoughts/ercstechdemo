@@ -10,9 +10,11 @@ import { PlayArrowIcon, PlusIcon, ClockIcon } from './components/icons';
 import { APP_TEXTS, THEME, MODE_CONFIG } from './themeConfig';
 
 import RewardScreen from './components/RewardScreen';
+import ExtractionScreen from './components/ExtractionScreen';
+import ActClearScreen from './components/ActClearScreen';
 import MemorialApp from './memorial/App';
 
-type DemoMode = 'select' | 'finale' | 'multiPlay' | 'spinning' | 'destinyDraw' | 'map' | 'characterSelect' | 'memorial' | 'reward';
+type DemoMode = 'select' | 'finale' | 'multiPlay' | 'spinning' | 'destinyDraw' | 'map' | 'characterSelect' | 'memorial' | 'reward' | 'extraction' | 'actClear';
 
 interface DragState {
   isActive: boolean;
@@ -445,7 +447,16 @@ const App: React.FC = () => {
     }
 
     if (demoMode === 'map') {
-      return <MapDemo onBackToMenu={() => resetGame('select')} />;
+      return <MapDemo onBackToMenu={() => resetGame('select')} onExtraction={() => setDemoMode('actClear')} />;
+    }
+
+    if (demoMode === 'actClear') {
+      return (
+        <ActClearScreen
+          onNextAct={() => setDemoMode('map')}
+          onExtract={() => setDemoMode('extraction')}
+        />
+      );
     }
 
     if (demoMode === 'characterSelect') {
@@ -471,6 +482,10 @@ const App: React.FC = () => {
         return <RewardScreen onBackToMenu={() => resetGame('select')} />;
       }
       return <VictoryScreen onBackToMenu={() => resetGame('select')} />;
+    }
+
+    if (demoMode === 'extraction') {
+      return <ExtractionScreen onBackToMenu={() => resetGame('select')} />;
     }
 
     return (

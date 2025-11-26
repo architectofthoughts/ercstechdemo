@@ -74,5 +74,10 @@ export const MODE_CONFIG = [
     id: 'memorial',
     title: "Memorial System",
     description: "기억의 조각을 모아 스냅샷을 기록하는 시스템"
+  },
+  {
+    id: 'extraction',
+    title: "Extraction Protocol",
+    description: "액트 클리어 후 포인트로 다음 런의 이점 구매"
   }
 ] as const;
