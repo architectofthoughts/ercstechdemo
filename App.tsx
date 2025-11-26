@@ -9,9 +9,10 @@ import CharacterSelectDemo from './components/CharacterSelectDemo';
 import { PlayArrowIcon, PlusIcon, ClockIcon } from './components/icons';
 import { APP_TEXTS, THEME, MODE_CONFIG } from './themeConfig';
 
+import RewardScreen from './components/RewardScreen';
 import MemorialApp from './memorial/App';
 
-type DemoMode = 'select' | 'finale' | 'multiPlay' | 'spinning' | 'destinyDraw' | 'map' | 'characterSelect' | 'memorial';
+type DemoMode = 'select' | 'finale' | 'multiPlay' | 'spinning' | 'destinyDraw' | 'map' | 'characterSelect' | 'memorial' | 'reward';
 
 interface DragState {
   isActive: boolean;
@@ -69,6 +70,20 @@ const App: React.FC = () => {
     }
   }, [isFinaleReady, gameState]);
 
+  // Check for victory condition
+  useEffect(() => {
+    if ((gameState === GameState.BATTLE_NORMAL || gameState === GameState.BATTLE_FINALE_READY) && enemies.length > 0) {
+      const allEnemiesDead = enemies.every(e => e.hp <= 0);
+      if (allEnemiesDead) {
+        // Add a small delay for the death animation before showing victory screen
+        const timer = setTimeout(() => {
+          setGameState(GameState.VICTORY);
+        }, 1500);
+        return () => clearTimeout(timer);
+      }
+    }
+  }, [enemies, gameState]);
+
   const selectDemoMode = (mode: DemoMode) => {
     setDemoMode(mode);
     resetGame(mode);
@@ -95,6 +110,22 @@ const App: React.FC = () => {
   }, []);
 
   const setupFavorableConditions = () => {
+    if (demoMode === 'reward') {
+      setEnemies([{
+        id: 'dying_guardian',
+        hp: 1,
+        maxHp: 100,
+        intent: { type: 'attack', value: 5 }
+      }]);
+      setPlayerMana(3);
+      setCardsInHand([
+        { id: 1, name: "Finishing Blow", cost: 1, description: "Deal 5 damage.", type: CardType.ATTACK },
+        { id: 2, name: "Defend", cost: 1, description: "Gain 5 Block.", type: CardType.SKILL },
+        { id: 3, name: "Strike", cost: 1, description: "Deal 6 damage.", type: CardType.ATTACK }
+      ]);
+      return;
+    }
+
     if (demoMode === 'finale') {
       setEnemies(favorableEnemies);
       setPlayerMana(5);
@@ -436,6 +467,9 @@ const App: React.FC = () => {
     }
 
     if (gameState === GameState.VICTORY) {
+      if (demoMode === 'reward') {
+        return <RewardScreen onBackToMenu={() => resetGame('select')} />;
+      }
       return <VictoryScreen onBackToMenu={() => resetGame('select')} />;
     }
 

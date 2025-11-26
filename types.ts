@@ -9,6 +9,7 @@ export enum GameState {
 export enum CardType {
   ATTACK,
   SKILL,
+  POWER,
 }
 
 export interface Card {
@@ -20,8 +21,8 @@ export interface Card {
 }
 
 export interface EnemyIntent {
-    type: 'attack' | 'defend' | 'debuff' | 'unknown';
-    value?: number;
+  type: 'attack' | 'defend' | 'debuff' | 'unknown';
+  value?: number;
 }
 
 export interface EnemyState {

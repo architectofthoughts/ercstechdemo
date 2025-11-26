@@ -56,6 +56,11 @@ export const MODE_CONFIG = [
     description: "모든 패를 버리고 운명의 드로우 (전투당 1회)"
   },
   {
+    id: 'reward',
+    title: "Victory Rewards",
+    description: "전투 승리 후 보상 획득 및 카드 선택 연출"
+  },
+  {
     id: 'map',
     title: "Procedural Map Tree",
     description: "이벤트, 전투, 휴식, 보스로 이어지는 절차적 맵 구조"
