@@ -22,7 +22,7 @@ interface DeckDragState {
 }
 
 interface BattleSceneProps {
-    demoMode: 'finale' | 'multiPlay' | 'spinning' | 'destinyDraw';
+    demoMode: 'finale' | 'multiPlay' | 'spinning' | 'destinyDraw' | 'playthrough';
     gameState: GameState;
     enemies: EnemyState[];
     playerMana: number;
@@ -337,7 +337,7 @@ const BattleScene: React.FC<BattleSceneProps> = ({
                             className="h-8 px-3 border border-dashed border-zinc-600 text-zinc-500 text-[0.6rem] font-serif hover:border-botw-gold hover:text-botw-gold transition-colors uppercase tracking-widest"
                             disabled={isFinaleReady || isAnimatingFinale || dragState.isActive || isHandSpinning}
                         >
-                            debug: force_state
+                            {demoMode === 'playthrough' ? 'SKIP BATTLE' : 'debug: force_state'}
                         </button>
                     </div>
                 </div>

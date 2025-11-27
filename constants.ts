@@ -28,14 +28,17 @@ export const spinningDemoCards: Card[] = [
   { id: 18, name: 'CORE_DUMP', cost: 1, description: 'Remove all debuffs.', type: CardType.SKILL },
 ];
 
-
 export const initialEnemies: EnemyState[] = [
-    { id: 'enemy_1', hp: 120, maxHp: 120, intent: { type: 'attack', value: 15 } },
-    { id: 'enemy_2', hp: 150, maxHp: 150, intent: { type: 'defend', value: 20 } },
-    { id: 'enemy_3', hp: 120, maxHp: 120, intent: { type: 'attack', value: 15 } },
+  { id: 'enemy_1', hp: 120, maxHp: 120, intent: { type: 'attack', value: 15 } },
+  { id: 'enemy_2', hp: 150, maxHp: 150, intent: { type: 'defend', value: 20 } },
+  { id: 'enemy_3', hp: 120, maxHp: 120, intent: { type: 'attack', value: 15 } },
 ];
 
 export const favorableEnemies: EnemyState[] = [
-    { id: 'enemy_1', hp: 15, maxHp: 120, intent: { type: 'debuff' } },
-    { id: 'enemy_2', hp: 10, maxHp: 150, intent: { type: 'unknown' } },
+  { id: 'enemy_1', hp: 15, maxHp: 120, intent: { type: 'debuff' } },
+  { id: 'enemy_2', hp: 10, maxHp: 150, intent: { type: 'unknown' } },
+];
+
+export const bossEnemy: EnemyState[] = [
+  { id: 'boss_omega', hp: 500, maxHp: 500, intent: { type: 'attack', value: 50 } }
 ];

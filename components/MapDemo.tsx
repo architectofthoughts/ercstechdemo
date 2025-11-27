@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { SwordIcon, CampfireIcon, QuestionIcon, SkullIcon, CrownIcon } from './icons';
 
@@ -38,10 +37,43 @@ const PREMADE_MAP_NODES: MapNode[] = [
     { id: '0-2', type: 'battle', x: 80, level: 0, parents: [] },
 ];
 
-const MapDemo: React.FC<{ onBackToMenu: () => void, onExtraction?: () => void, onNodeSelect?: (nodeType: string) => void }> = ({ onBackToMenu, onExtraction, onNodeSelect }) => {
+const MapDemo: React.FC<{ onBackToMenu: () => void, onExtraction?: () => void, onNodeSelect?: (nodeType: string) => void, progressLevel?: number }> = ({ onBackToMenu, onExtraction, onNodeSelect, progressLevel = 0 }) => {
     const [hoveredNode, setHoveredNode] = useState<MapNode | null>(null);
 
+    // Determine current level and position based on progressLevel
+    // progressLevel 0: Start (No current node, select Level 0)
+    // progressLevel 1: After Battle (Current '0-0', select Level 1)
+    // progressLevel 3: Pre-Boss (Current '3-0', select Level 4)
+    let currentNodeId: string | null = null;
+    if (progressLevel === 1) currentNodeId = '0-0';
+    if (progressLevel === 3) currentNodeId = '3-0';
+
     const handleNodeClick = (node: MapNode) => {
+        // Validation based on progressLevel
+        if (progressLevel === 0) {
+            if (node.level === 0) {
+                if (onNodeSelect) onNodeSelect(node.type);
+            }
+            return;
+        }
+
+        if (progressLevel === 1) {
+            // Can only select Level 1 nodes connected to '0-0'
+            if (node.level === 1 && node.parents.includes('0-0')) {
+                if (onNodeSelect) onNodeSelect(node.type);
+            }
+            return;
+        }
+
+        if (progressLevel === 3) {
+            // Can only select Level 4 (Boss) connected to '3-0'
+            if (node.level === 4 && node.parents.includes('3-0')) {
+                if (onNodeSelect) onNodeSelect(node.type);
+            }
+            return;
+        }
+
+        // Default behavior (fallback)
         if (onNodeSelect) {
             onNodeSelect(node.type);
         }
@@ -92,14 +124,27 @@ const MapDemo: React.FC<{ onBackToMenu: () => void, onExtraction?: () => void, o
             if (parent) {
                 const { x: pX, y: pY } = getCoords(parent);
 
+                let isVisitedPath = false;
+                let isNextPath = false;
+
+                if (progressLevel === 3) {
+                    // All paths up to level 3 are visited
+                    if (node.level <= 3 && parent.level <= 3) isVisitedPath = true;
+                    // Path to boss is next
+                    if (node.level === 4 && parent.id === '3-0') isNextPath = true;
+                } else if (progressLevel === 1) {
+                    // We are at 0-0. Paths connected to 0-0 are Next.
+                    if (parent.id === '0-0' && node.level === 1) isNextPath = true;
+                }
+
                 paths.push(
                     <line
                         key={`${parent.id}-${node.id}`}
                         x1={pX} y1={pY} x2={cX} y2={cY}
-                        stroke="#e2c774"
-                        strokeWidth="1"
-                        strokeDasharray="4 4"
-                        className="opacity-30"
+                        stroke={isVisitedPath || isNextPath ? "#e2c774" : "#e2c774"}
+                        strokeWidth={isVisitedPath ? "2" : "1"}
+                        strokeDasharray={isVisitedPath ? "0" : "4 4"}
+                        className={isVisitedPath ? "opacity-60" : (isNextPath ? "opacity-80 animate-pulse" : "opacity-30")}
                     />
                 );
             }
@@ -148,10 +193,44 @@ const MapDemo: React.FC<{ onBackToMenu: () => void, onExtraction?: () => void, o
                         const isHovered = hoveredNode?.id === node.id;
                         const { x, y } = getCoords(node);
 
+                        // Determine node state
+                        let isVisited = false;
+                        let isCurrent = false;
+                        let isNext = false;
+                        let isLocked = true;
+
+                        if (progressLevel === 0) {
+                            if (node.level === 0) {
+                                isNext = true;
+                                isLocked = false;
+                            }
+                        } else if (progressLevel === 1) {
+                            if (node.id === '0-0') isCurrent = true;
+                            if (node.level === 1 && node.parents.includes('0-0')) {
+                                isNext = true;
+                                isLocked = false;
+                            }
+                            if (node.level === 0 && node.id !== '0-0') isLocked = true; // Other start nodes locked
+                        } else if (progressLevel === 3) {
+                            if (node.level <= 3) isVisited = true;
+                            if (node.id === '3-0') {
+                                isVisited = false;
+                                isCurrent = true;
+                            }
+                            if (node.level === 4 && node.parents.includes('3-0')) {
+                                isNext = true;
+                                isLocked = false;
+                            }
+                        }
+
+                        // Override for visual clarity
+                        if (isCurrent) isLocked = false;
+                        if (isVisited) isLocked = false;
+
                         return (
                             <div
                                 key={node.id}
-                                className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group z-10"
+                                className={`absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group z-10 ${isLocked ? 'pointer-events-none grayscale opacity-30' : ''}`}
                                 style={{ left: x, top: y }}
                                 onMouseEnter={() => setHoveredNode(node)}
                                 onMouseLeave={() => setHoveredNode(null)}
@@ -161,15 +240,17 @@ const MapDemo: React.FC<{ onBackToMenu: () => void, onExtraction?: () => void, o
                                 <div className={`
                                     rounded-full flex items-center justify-center border-2 transition-all duration-300 bg-botw-dark relative
                                     ${node.type === 'boss' ? 'w-20 h-20 border-botw-red/50' : 'w-12 h-12 border-botw-gold/50'}
-                                    ${isHovered ? 'border-botw-blue shadow-[0_0_20px_rgba(77,232,254,0.5)] scale-110' : 'shadow-[0_0_10px_rgba(226,199,116,0.1)]'}
+                                    ${isHovered && !isLocked ? 'border-botw-blue shadow-[0_0_20px_rgba(77,232,254,0.5)] scale-110' : 'shadow-[0_0_10px_rgba(226,199,116,0.1)]'}
+                                    ${isVisited ? 'bg-botw-gold/20 border-botw-gold' : ''}
+                                    ${isCurrent ? 'bg-botw-blue/20 border-botw-blue animate-pulse' : ''}
                                  `}>
                                     {/* Inner Icon */}
-                                    <div className={`${isHovered ? 'text-botw-blue' : (node.type === 'boss' ? 'text-botw-red' : 'text-botw-gold')} transition-colors`}>
+                                    <div className={`${isHovered && !isLocked ? 'text-botw-blue' : (node.type === 'boss' ? 'text-botw-red' : 'text-botw-gold')} transition-colors`}>
                                         {getNodeIcon(node.type)}
                                     </div>
 
-                                    {/* Active/Current Indicator (Level 0) */}
-                                    {node.level === 0 && (
+                                    {/* Active/Current Indicator */}
+                                    {(isCurrent) && (
                                         <div className="absolute -bottom-6 text-[0.5rem] text-botw-gold uppercase tracking-widest whitespace-nowrap opacity-50">
                                             Current Pos
                                         </div>

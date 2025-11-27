@@ -1,11 +1,14 @@
 
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { GameState, Card, EnemyState, CardType } from './types';
-import { initialCards, favorableCards, initialEnemies, favorableEnemies, spinningDemoCards } from './constants';
+import { initialCards, favorableCards, initialEnemies, favorableEnemies, spinningDemoCards, bossEnemy } from './constants';
 import BattleScene from './components/BattleScene';
 import VictoryScreen from './components/VictoryScreen';
 import MapDemo from './components/MapDemo';
 import CharacterSelectDemo from './components/CharacterSelectDemo';
+import TitleScene from './components/TitleScene';
+import MainMenu from './components/MainMenu';
+import GachaScene from './components/GachaScene';
 import { PlayArrowIcon, PlusIcon, ClockIcon } from './components/icons';
 import { APP_TEXTS, THEME, MODE_CONFIG } from './themeConfig';
 
@@ -17,7 +20,9 @@ import DNAScreen from './components/DNAScreen';
 import EventDemo from './components/EventDemo';
 import ActSelectScreen from './components/ActSelectScreen';
 
-type DemoMode = 'select' | 'finale' | 'multiPlay' | 'spinning' | 'destinyDraw' | 'map' | 'characterSelect' | 'memorial' | 'reward' | 'extraction' | 'actClear' | 'dna' | 'event' | 'actPlay';
+type DemoMode = 'select' | 'finale' | 'multiPlay' | 'spinning' | 'destinyDraw' | 'map' | 'characterSelect' | 'memorial' | 'reward' | 'extraction' | 'actClear' | 'dna' | 'event' | 'actPlay' | 'playthrough';
+
+type PlaythroughStep = 'TITLE' | 'MAIN_MENU' | 'CHAR_SELECT' | 'DNA' | 'DECK_PREVIEW' | 'ACT_SELECT' | 'MAP' | 'BATTLE' | 'REWARD' | 'MAP_SELECT_EVENT' | 'EVENT' | 'MAP_SELECT_BOSS' | 'BOSS_BATTLE' | 'ACT_CLEAR' | 'EXTRACTION' | 'MAIN_MENU_2' | 'GACHA' | 'MEMORIAL_END';
 
 interface DragState {
   isActive: boolean;
@@ -63,6 +68,9 @@ const App: React.FC = () => {
 
   // Act Play Demo State
   const [actPlayStep, setActPlayStep] = useState<'SELECT_ACT' | 'MAP' | 'BATTLE' | 'REWARD'>('SELECT_ACT');
+
+  // Playthrough State
+  const [playthroughStep, setPlaythroughStep] = useState<PlaythroughStep>('TITLE');
 
   // Visual feedback for combat actions
   const [combatLog, setCombatLog] = useState<string | null>(null);
@@ -114,11 +122,27 @@ const App: React.FC = () => {
     setCombatLog(null);
     if (mode === 'select') {
       setDemoMode('select');
+    } else if (mode === 'playthrough') {
+      setPlaythroughStep('TITLE');
     }
     setActPlayStep('SELECT_ACT'); // Reset Act Play step
   }, []);
 
+  // Playthrough Boss Setup
+  useEffect(() => {
+    if (demoMode === 'playthrough' && playthroughStep === 'BOSS_BATTLE') {
+      setEnemies(bossEnemy);
+      setGameState(GameState.BATTLE_NORMAL);
+      setCardsInHand(initialCards);
+    }
+  }, [demoMode, playthroughStep]);
+
   const setupFavorableConditions = () => {
+    if (demoMode === 'playthrough') {
+      setEnemies(prev => prev.map(e => ({ ...e, hp: 0 })));
+      return;
+    }
+
     if (demoMode === 'reward' || demoMode === 'actPlay') {
       setEnemies([{
         id: 'dying_guardian',
@@ -386,7 +410,125 @@ const App: React.FC = () => {
   const draggedCardIds = useMemo(() => new Set(dragState.cards.map(c => c.id)), [dragState.cards]);
 
   const renderContent = () => {
+    if (demoMode === 'playthrough') {
+      switch (playthroughStep) {
+        case 'TITLE':
+          return <TitleScene onStart={() => setPlaythroughStep('MAIN_MENU')} />;
+        case 'MAIN_MENU':
+          return (
+            <MainMenu
+              onStartGame={() => setPlaythroughStep('CHAR_SELECT')}
+              onGacha={() => { }}
+              onMemorial={() => { }}
+              disabledItems={['MEMORIAL', 'GACHA', 'OPTIONS', 'EXIT']}
+            />
+          );
+        case 'CHAR_SELECT':
+          return <CharacterSelectDemo onBackToMenu={() => resetGame('select')} onComplete={() => setPlaythroughStep('DNA')} />;
+        case 'DNA':
+          // DNAScreen is handled inside CharacterSelectDemo if we let it, but here we split it?
+          // Wait, CharacterSelectDemo handles DNA internally. 
+          // My previous edit to CharacterSelectDemo makes it go to StartingDeckScreen (DECK step) and then calls onComplete.
+          // So CharacterSelectDemo encapsulates Select -> DNA -> Deck.
+          // So I don't need 'DNA' and 'DECK_PREVIEW' steps in App.tsx if CharacterSelectDemo handles them.
+          // But I defined them in PlaythroughStep. I can just skip them or use them if I refactor.
+          // For now, let CharacterSelectDemo handle it.
+          // So onComplete of CharacterSelectDemo should go to ACT_SELECT.
+          return <CharacterSelectDemo onBackToMenu={() => resetGame('select')} onComplete={() => setPlaythroughStep('ACT_SELECT')} />;
+        case 'ACT_SELECT':
+          return <ActSelectScreen onSelectAct={() => setPlaythroughStep('MAP')} onBackToMenu={() => resetGame('select')} />;
+        case 'MAP':
+          return (
+            <MapDemo
+              onBackToMenu={() => resetGame('select')}
+              onNodeSelect={(type) => {
+                if (type === 'battle') {
+                  setPlaythroughStep('BATTLE');
+                  setGameState(GameState.BATTLE_NORMAL);
+                  setEnemies(initialEnemies);
+                  setCardsInHand(initialCards);
+                }
+              }}
+            />
+          );
+        case 'BATTLE':
+          if (gameState === GameState.VICTORY) {
+            return <VictoryScreen onBackToMenu={() => setPlaythroughStep('REWARD')} />;
+          }
+          // Fallthrough to default return (BattleScene)
+          break;
+        case 'REWARD':
+          return <RewardScreen onBackToMenu={() => setPlaythroughStep('MAP_SELECT_EVENT')} />;
+        case 'MAP_SELECT_EVENT':
+          return (
+            <MapDemo
+              onBackToMenu={() => resetGame('select')}
+              progressLevel={1}
+              onNodeSelect={(type) => {
+                if (type === 'event') {
+                  setPlaythroughStep('EVENT');
+                }
+              }}
+            />
+          );
+        case 'EVENT':
+          return <EventDemo onBackToMenu={() => setPlaythroughStep('MAP_SELECT_BOSS')} singleEvent={true} />;
+        case 'MAP_SELECT_BOSS':
+          return (
+            <MapDemo
+              onBackToMenu={() => resetGame('select')}
+              progressLevel={3}
+              onNodeSelect={(type) => {
+                if (type === 'boss') {
+                  setPlaythroughStep('BOSS_BATTLE');
+                }
+              }}
+            />
+          );
+        case 'BOSS_BATTLE':
+          if (gameState === GameState.VICTORY) {
+            return <VictoryScreen onBackToMenu={() => setPlaythroughStep('ACT_CLEAR')} />;
+          }
+          // Fallthrough to default return (BattleScene)
+          break;
+        case 'ACT_CLEAR':
+          return <ActClearScreen onNextAct={() => { }} onExtract={() => setPlaythroughStep('EXTRACTION')} />;
+        case 'EXTRACTION':
+          return <ExtractionScreen onBackToMenu={() => setPlaythroughStep('MAIN_MENU_2')} />;
+        case 'MAIN_MENU_2':
+          return (
+            <MainMenu
+              onStartGame={() => { }}
+              onGacha={() => setPlaythroughStep('GACHA')}
+              onMemorial={() => { }}
+              disabledItems={['START OPERATION', 'MEMORIAL', 'OPTIONS', 'EXIT']}
+            />
+          );
+        case 'GACHA':
+          return <GachaScene onComplete={() => setPlaythroughStep('MEMORIAL_END')} />;
+        case 'MEMORIAL_END':
+          return (
+            <div className="relative w-full h-full">
+              <MemorialApp />
+              <div className="fixed bottom-8 w-full text-center pointer-events-none z-50">
+                <div className="inline-block bg-black/80 text-botw-gold px-6 py-2 border border-botw-gold/30 rounded animate-pulse">
+                  PLAYTHROUGH COMPLETE
+                </div>
+              </div>
+              <button
+                onClick={() => resetGame('select')}
+                className="fixed top-4 left-4 z-50 px-4 py-2 bg-black/50 text-white border border-white/20 rounded hover:bg-black/70 transition-colors"
+              >
+                ← Back to Menu
+              </button>
+            </div>
+          );
+      }
+    }
+
     if (demoMode === 'select') {
+      const playthroughMode = MODE_CONFIG.find(m => m.id === 'playthrough');
+
       return (
         <div className="w-full h-full flex flex-col items-center pt-24 px-8 relative z-10 max-w-4xl mx-auto overflow-y-auto scrollbar-hide">
           {/* Header */}
@@ -410,6 +552,37 @@ const App: React.FC = () => {
           </div>
 
           <div className="w-full flex flex-col gap-8 pb-20">
+            {/* Full Playthrough Button (Special) */}
+            {playthroughMode && (
+              <div className="w-full mb-4">
+                <div className="flex items-center gap-4 mb-4 opacity-80">
+                  <div className="h-px flex-1 bg-botw-gold/50"></div>
+                  <h3 className={`${THEME.fonts.heading} text-botw-gold text-lg tracking-[0.2em] uppercase glow-text`}>FULL SEQUENCE</h3>
+                  <div className="h-px flex-1 bg-botw-gold/50"></div>
+                </div>
+
+                <div
+                  onClick={() => selectDemoMode(playthroughMode.id as any)}
+                  className={`group relative w-full py-8 px-10 bg-botw-gold/10 border border-botw-gold hover:bg-botw-gold/20 flex items-center cursor-pointer transition-all duration-300 flex-shrink-0 shadow-[0_0_30px_rgba(226,199,116,0.1)] hover:shadow-[0_0_50px_rgba(226,199,116,0.2)]`}
+                >
+                  {/* Content */}
+                  <div className="flex-1 flex flex-col justify-center relative z-10">
+                    <h2 className={`${THEME.fonts.heading} text-3xl text-botw-gold mb-2`}>
+                      {playthroughMode.title}
+                    </h2>
+                    <p className={`${THEME.fonts.body} text-base text-botw-cream/90`}>
+                      {playthroughMode.description}
+                    </p>
+                  </div>
+
+                  {/* Right Side Arrow */}
+                  <div className="pl-6 text-botw-gold group-hover:translate-x-2 transition-transform duration-300">
+                    <PlayArrowIcon className="w-8 h-8" />
+                  </div>
+                </div>
+              </div>
+            )}
+
             {['Combat Demo', 'Act Map Demo', 'Flow Demo', 'ETC'].map((category) => (
               <div key={category} className="w-full">
                 <div className="flex items-center gap-4 mb-4 opacity-80">
@@ -419,7 +592,7 @@ const App: React.FC = () => {
                 </div>
 
                 <div className="flex flex-col gap-3">
-                  {MODE_CONFIG.filter((m) => m.category === category).map((mode) => (
+                  {MODE_CONFIG.filter((m) => m.category === category && m.id !== 'playthrough').map((mode) => (
                     <div
                       key={mode.id}
                       onClick={() => selectDemoMode(mode.id as any)}

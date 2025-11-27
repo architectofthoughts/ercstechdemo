@@ -65,7 +65,7 @@ const getCardsForCharacter = (charId: string): Card[] => {
 // --- Main Component ---
 type Step = 'SELECT' | 'DNA' | 'DECK';
 
-const CharacterSelectDemo: React.FC<{ onBackToMenu: () => void }> = ({ onBackToMenu }) => {
+const CharacterSelectDemo: React.FC<{ onBackToMenu: () => void, onComplete?: () => void }> = ({ onBackToMenu, onComplete }) => {
     const [step, setStep] = useState<Step>('SELECT');
     const [selectedIds, setSelectedIds] = useState<string[]>([]);
     const [generatedDNACard, setGeneratedDNACard] = useState<Card | null>(null);
@@ -134,7 +134,7 @@ const CharacterSelectDemo: React.FC<{ onBackToMenu: () => void }> = ({ onBackToM
     }
 
     if (step === 'DECK') {
-        return <StartingDeckScreen deck={generateFinalDeck()} onStartGame={onBackToMenu} />;
+        return <StartingDeckScreen deck={generateFinalDeck()} onStartGame={onComplete || onBackToMenu} />;
     }
 
     // Default: SELECT Step

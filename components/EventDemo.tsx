@@ -96,9 +96,10 @@ const EVENTS: GameEvent[] = [
 // --- Component ---
 interface EventDemoProps {
     onBackToMenu: () => void;
+    singleEvent?: boolean;
 }
 
-const EventDemo: React.FC<EventDemoProps> = ({ onBackToMenu }) => {
+const EventDemo: React.FC<EventDemoProps> = ({ onBackToMenu, singleEvent = false }) => {
     const [currentEventIndex, setCurrentEventIndex] = useState(0);
     const [gameState, setGameState] = useState<EventGameState>({
         hp: 50,
@@ -122,6 +123,11 @@ const EventDemo: React.FC<EventDemoProps> = ({ onBackToMenu }) => {
     };
 
     const handleNext = () => {
+        if (singleEvent) {
+            onBackToMenu();
+            return;
+        }
+
         if (currentEventIndex < EVENTS.length - 1) {
             setIsTransitioning(true);
             setTimeout(() => {

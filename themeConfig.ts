@@ -95,6 +95,12 @@ export const MODE_CONFIG = [
 
   // --- Flow Demo ---
   {
+    id: 'playthrough',
+    title: "전체 플레이스루 (Full Playthrough)",
+    description: "타이틀 -> 메뉴 -> 캐릭터 선택 -> 전투 -> 보스 -> 가챠 -> 엔딩까지 이어지는 전체 데모",
+    category: "Flow Demo"
+  },
+  {
     id: 'characterSelect',
     title: "시작 덱 구성 데모",
     description: "10명의 캐릭터 중 2명을 선택하여 스쿼드 구성",
