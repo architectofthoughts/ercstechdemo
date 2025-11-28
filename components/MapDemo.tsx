@@ -141,10 +141,10 @@ const MapDemo: React.FC<{ onBackToMenu: () => void, onExtraction?: () => void, o
                     <line
                         key={`${parent.id}-${node.id}`}
                         x1={pX} y1={pY} x2={cX} y2={cY}
-                        stroke={isVisitedPath || isNextPath ? "#e2c774" : "#e2c774"}
+                        stroke={isVisitedPath || isNextPath ? "#ffd700" : "#ffd700"}
                         strokeWidth={isVisitedPath ? "2" : "1"}
                         strokeDasharray={isVisitedPath ? "0" : "4 4"}
-                        className={isVisitedPath ? "opacity-60" : (isNextPath ? "opacity-80 animate-pulse" : "opacity-30")}
+                        className={isVisitedPath ? "opacity-60" : (isNextPath ? "opacity-80 animate-pulse shadow-magical-glow" : "opacity-30")}
                     />
                 );
             }
@@ -152,17 +152,17 @@ const MapDemo: React.FC<{ onBackToMenu: () => void, onExtraction?: () => void, o
     }
 
     return (
-        <div className="w-full h-full flex flex-col relative p-6 bg-botw-dark">
+        <div className="w-full h-full flex flex-col relative p-6 bg-magical-dark">
             {/* Header HUD */}
             <div className="w-full flex justify-between items-start pointer-events-none z-20 relative flex-shrink-0 h-20">
                 <button
                     onClick={onBackToMenu}
                     className="pointer-events-auto group flex items-center gap-3 opacity-70 hover:opacity-100 transition-opacity"
                 >
-                    <div className="w-8 h-8 border border-botw-gold rotate-45 flex items-center justify-center group-hover:bg-botw-gold/20 transition-colors">
-                        <div className="w-2 h-2 bg-botw-gold -rotate-45"></div>
+                    <div className="w-8 h-8 border border-magical-gold rotate-45 flex items-center justify-center group-hover:bg-magical-gold/20 transition-colors">
+                        <div className="w-2 h-2 bg-magical-gold -rotate-45"></div>
                     </div>
-                    <span className="font-serif text-botw-gold text-sm tracking-widest uppercase">Return to System</span>
+                    <span className="font-serif text-magical-gold text-sm tracking-widest uppercase">Return to System</span>
                 </button>
 
                 {onExtraction && (
@@ -175,8 +175,8 @@ const MapDemo: React.FC<{ onBackToMenu: () => void, onExtraction?: () => void, o
                 )}
 
                 <div className="flex flex-col items-end">
-                    <h2 className="text-2xl font-serif font-bold text-botw-gold">SECTOR MAP</h2>
-                    <div className="text-xs font-serif text-botw-cream opacity-60 tracking-widest">Procedural Generation V1</div>
+                    <h2 className="text-2xl font-serif font-bold text-magical-gold">SECTOR MAP</h2>
+                    <div className="text-xs font-serif text-magical-text opacity-60 tracking-widest">Procedural Generation V1</div>
                 </div>
             </div>
 
@@ -238,20 +238,20 @@ const MapDemo: React.FC<{ onBackToMenu: () => void, onExtraction?: () => void, o
                             >
                                 {/* Node Visual */}
                                 <div className={`
-                                    rounded-full flex items-center justify-center border-2 transition-all duration-300 bg-botw-dark relative
-                                    ${node.type === 'boss' ? 'w-20 h-20 border-botw-red/50' : 'w-12 h-12 border-botw-gold/50'}
-                                    ${isHovered && !isLocked ? 'border-botw-blue shadow-[0_0_20px_rgba(77,232,254,0.5)] scale-110' : 'shadow-[0_0_10px_rgba(226,199,116,0.1)]'}
-                                    ${isVisited ? 'bg-botw-gold/20 border-botw-gold' : ''}
-                                    ${isCurrent ? 'bg-botw-blue/20 border-botw-blue animate-pulse' : ''}
+                                    rounded-full flex items-center justify-center border-2 transition-all duration-300 bg-magical-uiDark relative
+                                    ${node.type === 'boss' ? 'w-20 h-20 border-magical-pink/50' : 'w-12 h-12 border-magical-gold/50'}
+                                    ${isHovered && !isLocked ? 'border-magical-blue shadow-magical-glow scale-110' : 'shadow-[0_0_10px_rgba(255,215,0,0.1)]'}
+                                    ${isVisited ? 'bg-magical-gold/20 border-magical-gold' : ''}
+                                    ${isCurrent ? 'bg-magical-blue/20 border-magical-blue animate-pulse' : ''}
                                  `}>
                                     {/* Inner Icon */}
-                                    <div className={`${isHovered && !isLocked ? 'text-botw-blue' : (node.type === 'boss' ? 'text-botw-red' : 'text-botw-gold')} transition-colors`}>
+                                    <div className={`${isHovered && !isLocked ? 'text-magical-blue' : (node.type === 'boss' ? 'text-magical-pink' : 'text-magical-gold')} transition-colors`}>
                                         {getNodeIcon(node.type)}
                                     </div>
 
                                     {/* Active/Current Indicator */}
                                     {(isCurrent) && (
-                                        <div className="absolute -bottom-6 text-[0.5rem] text-botw-gold uppercase tracking-widest whitespace-nowrap opacity-50">
+                                        <div className="absolute -bottom-6 text-[0.5rem] text-magical-gold uppercase tracking-widest whitespace-nowrap opacity-50">
                                             Current Pos
                                         </div>
                                     )}
@@ -264,18 +264,18 @@ const MapDemo: React.FC<{ onBackToMenu: () => void, onExtraction?: () => void, o
 
             {/* Info Panel Overlay (Bottom Center) */}
             <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 pointer-events-none h-24">
-                <div className={`bg-botw-slate/90 backdrop-blur border border-botw-gold/30 px-12 py-4 flex flex-col items-center transition-all duration-300 ${hoveredNode ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                <div className={`bg-magical-uiDark/90 backdrop-blur border border-magical-gold/30 px-12 py-4 flex flex-col items-center transition-all duration-300 ${hoveredNode ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
                     {/* Ornamental Borders */}
-                    <div className="absolute top-1 left-1 w-2 h-2 border-t border-l border-botw-gold"></div>
-                    <div className="absolute top-1 right-1 w-2 h-2 border-t border-r border-botw-gold"></div>
-                    <div className="absolute bottom-1 left-1 w-2 h-2 border-b border-l border-botw-gold"></div>
-                    <div className="absolute bottom-1 right-1 w-2 h-2 border-b border-r border-botw-gold"></div>
+                    <div className="absolute top-1 left-1 w-2 h-2 border-t border-l border-magical-gold"></div>
+                    <div className="absolute top-1 right-1 w-2 h-2 border-t border-r border-magical-gold"></div>
+                    <div className="absolute bottom-1 left-1 w-2 h-2 border-b border-l border-magical-gold"></div>
+                    <div className="absolute bottom-1 right-1 w-2 h-2 border-b border-r border-magical-gold"></div>
 
-                    <h3 className="text-lg font-serif font-bold text-botw-gold uppercase tracking-widest mb-1">
+                    <h3 className="text-lg font-serif font-bold text-magical-gold uppercase tracking-widest mb-1">
                         {hoveredNode ? getNodeLabel(hoveredNode.type) : ''}
                     </h3>
-                    <div className="w-32 h-px bg-gradient-to-r from-transparent via-botw-blue to-transparent"></div>
-                    <p className="text-xs font-serif text-zinc-400 mt-2">
+                    <div className="w-32 h-px bg-gradient-to-r from-transparent via-magical-blue to-transparent"></div>
+                    <p className="text-xs font-serif text-magical-text/60 mt-2">
                         Sector Level: {hoveredNode?.level}
                     </p>
                 </div>

@@ -142,13 +142,13 @@ const EventDemo: React.FC<EventDemoProps> = ({ onBackToMenu, singleEvent = false
     };
 
     return (
-        <div className="w-full h-full bg-botw-dark text-botw-cream flex items-center justify-center relative overflow-hidden">
+        <div className="w-full h-full bg-magical-dark text-magical-text flex items-center justify-center relative overflow-hidden">
             {/* Background Ambience */}
             <div className="absolute inset-0 bg-noise opacity-10 pointer-events-none" />
             <div className={`absolute inset-0 transition-colors duration-1000 opacity-30 ${currentEvent.imageColor}`} />
 
             {/* Top Bar Stats */}
-            <div className="absolute top-0 left-0 w-full p-4 flex justify-between items-center bg-black/40 backdrop-blur-sm border-b border-botw-uiBorder/30 z-20">
+            <div className="absolute top-0 left-0 w-full p-4 flex justify-between items-center bg-black/40 backdrop-blur-sm border-b border-magical-gold/30 z-20">
                 <div className="flex gap-6 text-sm tracking-widest font-mono">
                     <div className="flex items-center gap-2">
                         <span className="text-red-500">♥</span> {gameState.hp}/{gameState.maxHp}
@@ -184,7 +184,7 @@ const EventDemo: React.FC<EventDemoProps> = ({ onBackToMenu, singleEvent = false
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
                         transition={{ duration: 0.4 }}
-                        className="w-full max-w-5xl h-[600px] flex bg-botw-uiDark border border-botw-uiBorder shadow-2xl rounded-lg overflow-hidden relative z-10"
+                        className="w-full max-w-5xl h-[600px] flex bg-magical-uiDark border border-magical-gold shadow-magical-glow rounded-lg overflow-hidden relative z-10"
                     >
                         {/* Left Image Area */}
                         <div className={`w-1/3 h-full ${currentEvent.imageColor} relative overflow-hidden`}>
@@ -201,7 +201,7 @@ const EventDemo: React.FC<EventDemoProps> = ({ onBackToMenu, singleEvent = false
                         <div className="w-2/3 h-full p-12 flex flex-col relative">
                             {/* Header */}
                             <div className="mb-8">
-                                <h2 className={`${THEME.fonts.heading} text-4xl text-botw-cream mb-4 border-b border-botw-uiBorder/50 pb-4`}>
+                                <h2 className={`${THEME.fonts.heading} text-4xl text-magical-gold mb-4 border-b border-magical-gold/50 pb-4`}>
                                     {currentEvent.title}
                                 </h2>
                             </div>
@@ -245,15 +245,15 @@ const EventDemo: React.FC<EventDemoProps> = ({ onBackToMenu, singleEvent = false
                           w-full p-4 text-left border transition-all duration-200 flex justify-between items-center group
                           ${isDisabled
                                                         ? 'bg-zinc-900/50 border-zinc-800 text-zinc-600 cursor-not-allowed'
-                                                        : 'bg-black/40 border-botw-uiBorder hover:bg-botw-blue/10 hover:border-botw-blue hover:pl-6'
+                                                        : 'bg-black/40 border-magical-gold/30 hover:bg-magical-gold/10 hover:border-magical-gold hover:pl-6'
                                                     }
                         `}
                                             >
                                                 <div className="flex items-center gap-3">
-                                                    <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs border ${isDisabled ? 'border-zinc-700' : 'border-botw-uiBorder group-hover:border-botw-blue'}`}>
+                                                    <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs border ${isDisabled ? 'border-zinc-700' : 'border-magical-gold/50 group-hover:border-magical-gold'}`}>
                                                         {idx + 1}
                                                     </span>
-                                                    <span className={`font-bold ${isDisabled ? '' : 'group-hover:text-botw-blue'}`}>
+                                                    <span className={`font-bold ${isDisabled ? '' : 'group-hover:text-magical-gold'}`}>
                                                         {choice.text}
                                                     </span>
                                                     <span className="text-zinc-500 text-sm">
@@ -266,7 +266,7 @@ const EventDemo: React.FC<EventDemoProps> = ({ onBackToMenu, singleEvent = false
                                 ) : (
                                     <button
                                         onClick={handleNext}
-                                        className="w-full p-4 bg-botw-blue/20 border border-botw-blue text-botw-blue hover:bg-botw-blue/30 transition-all font-bold tracking-widest uppercase flex justify-center items-center gap-2"
+                                        className="w-full p-4 bg-magical-gold/20 border border-magical-gold text-magical-gold hover:bg-magical-gold/30 transition-all font-bold tracking-widest uppercase flex justify-center items-center gap-2"
                                     >
                                         {currentEventIndex < EVENTS.length - 1 ? '다음으로' : '떠나기'} <PlayArrowIcon className="w-4 h-4" />
                                     </button>

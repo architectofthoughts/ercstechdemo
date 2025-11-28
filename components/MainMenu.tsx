@@ -37,22 +37,24 @@ const MainMenu: React.FC<MainMenuProps & { disabledItems?: string[] }> = ({ onSt
                             {/* Hover Indicator */}
                             {!isDisabled && (
                                 <div className={`
-                w-2 h-2 bg-botw-gold rotate-45 transform transition-all duration-300 opacity-0 
-                group-hover:opacity-100 group-hover:translate-x-2
-                `}></div>
+                                    text-magical-gold text-lg transform transition-all duration-300 opacity-0 
+                                    group-hover:opacity-100 group-hover:translate-x-2
+                                `}>
+                                    {['♠', '♥', '♣', '♦'][index % 4]}
+                                </div>
                             )}
 
                             <span className={`
               ${THEME.fonts.heading} tracking-widest
-              ${item.primary ? 'text-white font-bold' : 'text-botw-cream/80'}
-              ${!isDisabled && 'group-hover:text-botw-gold group-hover:pl-4'} transition-all duration-300
+              ${item.primary ? 'text-white font-bold' : 'text-magical-text/80'}
+              ${!isDisabled && 'group-hover:text-magical-gold group-hover:pl-4'} transition-all duration-300
             `}>
                                 {item.label}
                             </span>
 
                             {/* Background Hover Line */}
                             {!isDisabled && (
-                                <div className="absolute bottom-0 left-0 w-0 h-px bg-botw-gold/50 transition-all duration-500 group-hover:w-full"></div>
+                                <div className="absolute bottom-0 left-0 w-0 h-px bg-magical-gold/50 transition-all duration-500 group-hover:w-full"></div>
                             )}
                         </button>
                     );

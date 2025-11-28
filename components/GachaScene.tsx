@@ -36,23 +36,22 @@ const GachaScene: React.FC<GachaSceneProps> = ({ onComplete }) => {
         <div className="w-full h-full flex flex-col items-center justify-center relative z-50 bg-black/90">
             {state === 'READY' && (
                 <div className="text-center">
-                    <h2 className={`${THEME.fonts.heading} text-4xl text-white mb-8 tracking-widest`}>
-                        DATA EXTRACTION
+                    <h2 className={`${THEME.fonts.heading} text-4xl text-magical-gold mb-8 tracking-widest drop-shadow-lg`}>
+                        STARRY SUMMON
                     </h2>
                     <button
                         onClick={handlePull}
-                        className="px-12 py-4 bg-botw-gold text-black font-bold tracking-[0.2em] hover:bg-white transition-colors clip-path-polygon"
-                        style={{ clipPath: 'polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%)' }}
+                        className="px-12 py-4 bg-magical-gold text-magical-dark font-bold tracking-[0.2em] hover:bg-white transition-colors shadow-magical-glow"
                     >
-                        INITIATE SEQUENCE
+                        WISH UPON A STAR
                     </button>
                 </div>
             )}
 
             {state === 'ANIMATING' && (
                 <div className="flex flex-col items-center">
-                    <div className="w-32 h-32 border-4 border-botw-blue rounded-full animate-spin border-t-transparent"></div>
-                    <p className="mt-8 text-botw-blue tracking-widest animate-pulse">DECRYPTING DATA STREAMS...</p>
+                    <div className="w-32 h-32 border-4 border-magical-pink rounded-full animate-spin border-t-transparent shadow-magical-glow"></div>
+                    <p className="mt-8 text-magical-pink tracking-widest animate-pulse">GATHERING STARLIGHT...</p>
                 </div>
             )}
 
@@ -63,21 +62,21 @@ const GachaScene: React.FC<GachaSceneProps> = ({ onComplete }) => {
                             <div
                                 key={idx}
                                 className={`
-                  w-48 h-64 bg-botw-uiDark border border-botw-uiBorder flex flex-col items-center justify-center p-4
-                  transition-all duration-500 transform
+                  w-48 h-64 bg-magical-uiDark border border-magical-gold flex flex-col items-center justify-center p-4
+                  transition-all duration-500 transform shadow-magical-glow
                   ${revealedItems.includes(idx) ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-10 scale-90'}
                 `}
                             >
                                 <div className={`text-xs tracking-widest mb-2 ${item.color}`}>{item.type}</div>
-                                <div className={`w-20 h-20 mb-4 rounded-full border-2 flex items-center justify-center overflow-hidden ${item.type === 'CHARACTER' ? 'border-botw-gold bg-botw-gold/10' : 'border-botw-blue bg-botw-blue/10'}`}>
+                                <div className={`w-20 h-20 mb-4 rounded-full border-2 flex items-center justify-center overflow-hidden ${item.type === 'CHARACTER' ? 'border-magical-gold bg-magical-gold/10' : 'border-magical-blue bg-magical-blue/10'}`}>
                                     {item.image ? (
                                         <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
                                     ) : (
-                                        <span className="text-2xl">📦</span>
+                                        <span className="text-2xl">✨</span>
                                     )}
                                 </div>
-                                <div className={`${THEME.fonts.heading} text-center text-sm mb-1`}>{item.name}</div>
-                                <div className="text-xs text-white/50">{item.rarity}</div>
+                                <div className={`${THEME.fonts.heading} text-center text-sm mb-1 text-magical-text`}>{item.name}</div>
+                                <div className="text-xs text-magical-text/50">{item.rarity}</div>
                             </div>
                         ))}
                     </div>
@@ -86,9 +85,9 @@ const GachaScene: React.FC<GachaSceneProps> = ({ onComplete }) => {
                         <div className="mt-12 text-center animate-fadeIn">
                             <button
                                 onClick={onComplete}
-                                className="px-8 py-3 border border-botw-cream/30 text-botw-cream hover:bg-botw-cream/10 transition-colors tracking-widest"
+                                className="px-8 py-3 border border-magical-gold/30 text-magical-gold hover:bg-magical-gold/10 transition-colors tracking-widest"
                             >
-                                CONFIRM ACQUISITION
+                                ACCEPT DESTINY
                             </button>
                         </div>
                     )}

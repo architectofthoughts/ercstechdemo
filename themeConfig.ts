@@ -2,9 +2,9 @@
 // Application Text Configuration
 export const APP_TEXTS = {
   header: {
-    systemLabel: "CARD ACTION TECHDEMO",
-    title: "Eternal Return : Clipshift",
-    subtitle: "- System -"
+    systemLabel: "MAGICAL CARD ACTION",
+    title: "Eternal Return : ClipShift",
+    subtitle: "- Phantom Thief -"
   },
   footer: {
     text: "NIMBLENEURON. 1.0.0"
@@ -15,22 +15,25 @@ export const APP_TEXTS = {
 // Change fonts and sizes here to affect the whole app
 export const THEME = {
   fonts: {
-    heading: "font-hahmlet", // The decorative serif font (Hahmlet)
-    body: "font-sans",           // Standard sans-serif (Lato)
-    mono: "font-mono"            // Monospace for tech details
+    heading: "font-serif", // Cinzel
+    body: "font-sans",     // Lato
+    mono: "font-mono"      // Monospace
   },
   textSizes: {
-    headerTitle: "text-5xl md:text-6xl",
-    headerSubtitle: "text-sm tracking-[0.3em]",
+    headerTitle: "text-5xl md:text-7xl",
+    headerSubtitle: "text-sm tracking-[0.5em]",
     cardTitle: "text-xl font-bold",
-    cardMeta: "text-xs tracking-widest opacity-60",
-    cardBody: "text-sm opacity-80"
+    cardMeta: "text-xs tracking-widest opacity-80",
+    cardBody: "text-sm opacity-90"
   },
   colors: {
-    primary: "text-botw-cream",
-    accent: "text-botw-blue",
-    gold: "text-botw-gold",
-    muted: "text-zinc-500"
+    primary: "text-magical-text",
+    accent: "text-magical-pink",
+    gold: "text-magical-gold",
+    muted: "text-magical-blue opacity-60",
+    bg: "bg-magical-dark",
+    uiBg: "bg-magical-uiDark",
+    border: "border-magical-uiBorder"
   }
 };
 

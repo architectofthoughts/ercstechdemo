@@ -81,25 +81,25 @@ const BattleScene: React.FC<BattleSceneProps> = ({
 
     return (
         <div className="relative w-full h-full flex flex-col items-center justify-between p-6 z-10">
-            {/* Top HUD - Sheikah Slate Style */}
+            {/* Top HUD - Magical Style */}
             <div className="w-full flex justify-between items-start pointer-events-none">
                 <button
                     onClick={onBackToMenu}
                     className="pointer-events-auto group flex items-center gap-3 opacity-70 hover:opacity-100 transition-opacity"
                 >
-                    <div className="w-8 h-8 border border-botw-gold rotate-45 flex items-center justify-center group-hover:bg-botw-gold/20 transition-colors">
-                        <div className="w-2 h-2 bg-botw-gold -rotate-45"></div>
+                    <div className="w-8 h-8 border border-magical-gold rotate-45 flex items-center justify-center group-hover:bg-magical-gold/20 transition-colors">
+                        <div className="w-2 h-2 bg-magical-gold -rotate-45"></div>
                     </div>
-                    <span className="font-serif text-botw-gold text-sm tracking-widest uppercase">Leave Trial</span>
+                    <span className="font-serif text-magical-gold text-sm tracking-widest uppercase">Leave Stage</span>
                 </button>
 
                 <div className="flex flex-col items-end">
                     <div className="flex items-center gap-2 mb-1">
-                        <div className="h-[1px] w-12 bg-botw-gold/50"></div>
-                        <div className="text-xs font-serif text-botw-gold tracking-[0.2em] uppercase">Simulation</div>
-                        <div className="h-[1px] w-12 bg-botw-gold/50"></div>
+                        <div className="h-[1px] w-12 bg-magical-gold/50"></div>
+                        <div className="text-xs font-serif text-magical-gold tracking-[0.2em] uppercase">Simulation</div>
+                        <div className="h-[1px] w-12 bg-magical-gold/50"></div>
                     </div>
-                    <div className="text-botw-blue font-bold font-serif text-xl uppercase drop-shadow-md">{demoMode.replace(/([A-Z])/g, ' $1')}</div>
+                    <div className="text-magical-blue font-bold font-serif text-xl uppercase drop-shadow-md">{demoMode.replace(/([A-Z])/g, ' $1')}</div>
                 </div>
             </div>
 
@@ -109,9 +109,9 @@ const BattleScene: React.FC<BattleSceneProps> = ({
                     className="absolute top-20 left-0 right-0 h-[60%] z-20 flex items-center justify-center"
                     onMouseUp={(e) => onDropOnEnemies(e)}
                 >
-                    <div className="bg-botw-blue/5 border-2 border-botw-blue/30 backdrop-blur-sm px-12 py-6 rounded-full animate-pulse flex flex-col items-center gap-2">
-                        <div className="text-botw-blue font-serif font-bold text-xl tracking-widest">RELEASE TO CAST</div>
-                        <div className="w-full h-px bg-gradient-to-r from-transparent via-botw-blue to-transparent"></div>
+                    <div className="bg-magical-blue/5 border-2 border-magical-blue/30 backdrop-blur-sm px-12 py-6 rounded-full animate-pulse flex flex-col items-center gap-2">
+                        <div className="text-magical-blue font-serif font-bold text-xl tracking-widest">RELEASE TO CAST</div>
+                        <div className="w-full h-px bg-gradient-to-r from-transparent via-magical-blue to-transparent"></div>
                     </div>
                 </div>
             )}
@@ -120,20 +120,20 @@ const BattleScene: React.FC<BattleSceneProps> = ({
             {finaleDragState.isActive && (
                 <>
                     {/* Execute Zone (Top) */}
-                    <div className="absolute top-0 left-0 w-full h-[70%] z-10 flex items-center justify-center bg-gradient-to-b from-botw-gold/10 to-transparent">
+                    <div className="absolute top-0 left-0 w-full h-[70%] z-10 flex items-center justify-center bg-gradient-to-b from-magical-gold/10 to-transparent">
                         <div className="text-center transform -translate-y-10">
-                            <div className="text-6xl font-serif font-black text-botw-gold/80 tracking-[0.2em] drop-shadow-[0_0_20px_rgba(226,199,116,0.5)] animate-pulse">UNLEASH</div>
+                            <div className="text-6xl font-serif font-black text-magical-gold/80 tracking-[0.2em] drop-shadow-[0_0_20px_rgba(255,215,0,0.5)] animate-pulse">UNLEASH</div>
                             <div className="flex items-center justify-center gap-4 mt-4 opacity-60">
-                                <div className="w-12 h-[1px] bg-botw-gold"></div>
-                                <div className="text-sm font-serif text-botw-cream uppercase tracking-widest">Secret Art</div>
-                                <div className="w-12 h-[1px] bg-botw-gold"></div>
+                                <div className="w-12 h-[1px] bg-magical-gold"></div>
+                                <div className="text-sm font-serif text-magical-text uppercase tracking-widest">Secret Art</div>
+                                <div className="w-12 h-[1px] bg-magical-gold"></div>
                             </div>
                         </div>
                     </div>
 
                     {/* Cancel Zone (Bottom) */}
                     <div className="absolute bottom-0 left-0 w-full h-[30%] z-10 bg-gradient-to-t from-black/80 to-transparent flex items-center justify-center">
-                        <div className="text-zinc-500 font-serif tracking-widest text-sm uppercase border-t border-zinc-700 pt-4 px-12">Return to Stance</div>
+                        <div className="text-magical-blue font-serif tracking-widest text-sm uppercase border-t border-magical-blue/30 pt-4 px-12">Return to Stance</div>
                     </div>
                 </>
             )}
@@ -142,8 +142,8 @@ const BattleScene: React.FC<BattleSceneProps> = ({
             {combatLog && (
                 <div className="absolute top-1/3 left-1/2 -translate-x-1/2 z-40 pointer-events-none w-full flex justify-center">
                     <div className="flex flex-col items-center animate-[float_0.5s_ease-out]">
-                        <div className="text-botw-gold font-serif italic text-4xl drop-shadow-md">{combatLog}</div>
-                        <div className="w-32 h-[2px] bg-gradient-to-r from-transparent via-botw-gold to-transparent mt-2"></div>
+                        <div className="text-magical-gold font-serif italic text-4xl drop-shadow-md">{combatLog}</div>
+                        <div className="w-32 h-[2px] bg-gradient-to-r from-transparent via-magical-gold to-transparent mt-2"></div>
                     </div>
                 </div>
             )}
@@ -156,9 +156,9 @@ const BattleScene: React.FC<BattleSceneProps> = ({
                 {/* Visual Indicator for Finale Ready */}
                 {isFinaleReady && !finaleDragState.isActive && !isAnimatingFinale && (
                     <div className="absolute -top-24 left-1/2 -translate-x-1/2 text-center pointer-events-none z-30 animate-mystic-pulse">
-                        <SheikahEyeIcon className="w-12 h-12 text-botw-gold mx-auto mb-2" />
-                        <div className="text-botw-gold font-serif font-bold tracking-widest text-lg drop-shadow-md">SECRET ART READY</div>
-                        <div className="text-botw-cream/70 text-xs font-serif mt-1">Hold to Activate</div>
+                        <SheikahEyeIcon className="w-12 h-12 text-magical-gold mx-auto mb-2" />
+                        <div className="text-magical-gold font-serif font-bold tracking-widest text-lg drop-shadow-md">SECRET ART READY</div>
+                        <div className="text-magical-text/70 text-xs font-serif mt-1">Hold to Activate</div>
                     </div>
                 )}
 
@@ -189,7 +189,7 @@ const BattleScene: React.FC<BattleSceneProps> = ({
                             />
                         </div>
                     ))}
-                    <div className="absolute -top-16 left-1/2 -translate-x-1/2 flex flex-col items-center text-botw-gold drop-shadow-md whitespace-nowrap">
+                    <div className="absolute -top-16 left-1/2 -translate-x-1/2 flex flex-col items-center text-magical-gold drop-shadow-md whitespace-nowrap">
                         <div className="font-serif text-xl">{dragState.cards.length}x Chain</div>
                         <div className="text-sm opacity-80">Cost: {totalDragCost}</div>
                     </div>
@@ -225,7 +225,7 @@ const BattleScene: React.FC<BattleSceneProps> = ({
                                             playerMana={99}
                                             style={{
                                                 transform: 'scale(0.6)',
-                                                boxShadow: '0 0 30px rgba(226,199,116,0.6)' // Gold glow
+                                                boxShadow: '0 0 30px rgba(255,215,0,0.6)' // Gold glow
                                             }}
                                         />
                                     </div>
@@ -233,8 +233,8 @@ const BattleScene: React.FC<BattleSceneProps> = ({
                             )
                         })}
                         {/* Cursor Core Effect */}
-                        <div className="absolute -translate-x-1/2 -translate-y-1/2 w-48 h-48 border border-botw-gold/30 rounded-full animate-ping opacity-30 pointer-events-none"></div>
-                        <div className="absolute -translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-botw-gold rotate-45 animate-[spin_3s_linear_infinite] pointer-events-none shadow-[0_0_30px_#e2c774]"></div>
+                        <div className="absolute -translate-x-1/2 -translate-y-1/2 w-48 h-48 border border-magical-gold/30 rounded-full animate-ping opacity-30 pointer-events-none"></div>
+                        <div className="absolute -translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-magical-gold rotate-45 animate-[spin_3s_linear_infinite] pointer-events-none shadow-[0_0_30px_#ffd700]"></div>
                     </div>
                 </div>
             )}
@@ -245,9 +245,9 @@ const BattleScene: React.FC<BattleSceneProps> = ({
                     className="absolute top-0 left-0 pointer-events-none z-[60]"
                     style={{ transform: `translate(${deckDragState.position.x}px, ${deckDragState.position.y}px)` }}
                 >
-                    <div className="relative -translate-x-1/2 -translate-y-1/2 w-32 h-48 bg-botw-slate border-2 border-botw-gold rounded-lg shadow-[0_0_30px_rgba(226,199,116,0.5)] flex items-center justify-center animate-pulse">
-                        <div className="text-botw-gold font-serif text-4xl">?</div>
-                        <div className="absolute inset-0 bg-botw-gold/10 animate-pulse"></div>
+                    <div className="relative -translate-x-1/2 -translate-y-1/2 w-32 h-48 bg-magical-uiDark border-2 border-magical-gold rounded-lg shadow-[0_0_30px_rgba(255,215,0,0.5)] flex items-center justify-center animate-pulse">
+                        <div className="text-magical-gold font-serif text-4xl">?</div>
+                        <div className="absolute inset-0 bg-magical-gold/10 animate-pulse"></div>
                     </div>
                 </div>
             )}
@@ -302,39 +302,39 @@ const BattleScene: React.FC<BattleSceneProps> = ({
                         {/* Mana Orb */}
                         <div className="relative w-24 h-24 flex items-center justify-center">
                             {/* Outer Rings */}
-                            <div className="absolute inset-0 border-2 border-botw-blue/30 rounded-full animate-[spin_12s_linear_infinite]"></div>
-                            <div className="absolute inset-2 border border-dashed border-botw-gold/30 rounded-full animate-[spin_15s_linear_infinite_reverse]"></div>
+                            <div className="absolute inset-0 border-2 border-magical-blue/30 rounded-full animate-[spin_12s_linear_infinite]"></div>
+                            <div className="absolute inset-2 border border-dashed border-magical-gold/30 rounded-full animate-[spin_15s_linear_infinite_reverse]"></div>
 
                             {/* Inner Glow */}
-                            <div className="absolute inset-4 bg-botw-blue/10 rounded-full backdrop-blur-sm"></div>
+                            <div className="absolute inset-4 bg-magical-blue/10 rounded-full backdrop-blur-sm"></div>
 
                             <div className="flex flex-col items-center z-10">
-                                <span className="text-3xl font-serif font-bold text-botw-blue drop-shadow-md">{playerMana}</span>
-                                <div className="w-8 h-[1px] bg-botw-blue/50 my-1"></div>
-                                <span className="text-[0.6rem] text-botw-blue/80 uppercase tracking-widest font-serif">{playerMana}/{playerMaxMana}</span>
+                                <span className="text-3xl font-serif font-bold text-magical-blue drop-shadow-md">{playerMana}</span>
+                                <div className="w-8 h-[1px] bg-magical-blue/50 my-1"></div>
+                                <span className="text-[0.6rem] text-magical-blue/80 uppercase tracking-widest font-serif">{playerMana}/{playerMaxMana}</span>
                             </div>
                         </div>
 
                         {/* Deck UI for Destiny Draw */}
                         {demoMode === 'destinyDraw' && (
                             <div
-                                className={`relative w-20 h-28 bg-botw-slate border-2 border-botw-gold/50 rounded-lg shadow-lg transition-transform ${isDestinyDrawUsed ? 'opacity-50 grayscale' : 'hover:scale-105 cursor-pointer'}`}
+                                className={`relative w-20 h-28 bg-magical-uiDark border-2 border-magical-gold/50 rounded-lg shadow-lg transition-transform ${isDestinyDrawUsed ? 'opacity-50 grayscale' : 'hover:scale-105 cursor-pointer'}`}
                                 onMouseDown={onDeckTriggerStart}
                             >
                                 {/* Deck Pattern */}
-                                <div className="absolute inset-2 border border-botw-gold/20 rounded flex items-center justify-center">
-                                    <div className="w-8 h-8 border border-botw-gold/30 rotate-45"></div>
+                                <div className="absolute inset-2 border border-magical-gold/20 rounded flex items-center justify-center">
+                                    <div className="w-8 h-8 border border-magical-gold/30 rotate-45"></div>
                                 </div>
-                                <div className="absolute -top-2 -right-2 w-6 h-6 bg-botw-gold text-botw-slate font-bold flex items-center justify-center rounded-full text-xs">
+                                <div className="absolute -top-2 -right-2 w-6 h-6 bg-magical-gold text-magical-uiDark font-bold flex items-center justify-center rounded-full text-xs">
                                     {isDestinyDrawUsed ? 0 : 20}
                                 </div>
-                                {!isDestinyDrawUsed && <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[0.6rem] text-botw-gold uppercase tracking-widest whitespace-nowrap">Hold & Drag</div>}
+                                {!isDestinyDrawUsed && <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[0.6rem] text-magical-gold uppercase tracking-widest whitespace-nowrap">Hold & Drag</div>}
                             </div>
                         )}
 
                         <button
                             onClick={onSetupFavorable}
-                            className="h-8 px-3 border border-dashed border-zinc-600 text-zinc-500 text-[0.6rem] font-serif hover:border-botw-gold hover:text-botw-gold transition-colors uppercase tracking-widest"
+                            className="h-8 px-3 border border-dashed border-zinc-600 text-zinc-500 text-[0.6rem] font-serif hover:border-magical-gold hover:text-magical-gold transition-colors uppercase tracking-widest"
                             disabled={isFinaleReady || isAnimatingFinale || dragState.isActive || isHandSpinning}
                         >
                             {demoMode === 'playthrough' ? 'SKIP BATTLE' : 'debug: force_state'}
@@ -343,15 +343,15 @@ const BattleScene: React.FC<BattleSceneProps> = ({
                 </div>
 
                 <div className="absolute bottom-10 right-10 z-20">
-                    <button className="group relative px-12 py-4 bg-botw-slate/80 border border-botw-gold/30 hover:bg-botw-gold/10 hover:border-botw-gold transition-all overflow-hidden">
+                    <button className="group relative px-12 py-4 bg-magical-uiDark/80 border border-magical-gold/30 hover:bg-magical-gold/10 hover:border-magical-gold transition-all overflow-hidden">
                         {/* Ornamental corners */}
-                        <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-botw-gold"></div>
-                        <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-botw-gold"></div>
+                        <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-magical-gold"></div>
+                        <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-magical-gold"></div>
 
-                        <span className="font-serif font-bold text-botw-cream group-hover:text-botw-gold tracking-[0.2em] uppercase relative z-10">
+                        <span className="font-serif font-bold text-magical-text group-hover:text-magical-gold tracking-[0.2em] uppercase relative z-10">
                             End Turn
                         </span>
-                        <div className="absolute inset-0 bg-botw-gold/5 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500"></div>
+                        <div className="absolute inset-0 bg-magical-gold/5 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500"></div>
                     </button>
                 </div>
 

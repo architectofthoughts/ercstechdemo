@@ -534,7 +534,7 @@ const App: React.FC = () => {
           {/* Header */}
           <div className="text-center mb-16 relative w-full flex-shrink-0">
             {/* Decorative Stars/Lines */}
-            <div className="flex justify-center items-center gap-2 mb-3 text-botw-gold opacity-80">
+            <div className="flex justify-center items-center gap-2 mb-3 text-magical-gold opacity-80">
               <div className="w-2 h-px bg-current"></div>
               <div className="text-xs">✧</div>
               <div className="w-2 h-px bg-current"></div>
@@ -556,27 +556,27 @@ const App: React.FC = () => {
             {playthroughMode && (
               <div className="w-full mb-4">
                 <div className="flex items-center gap-4 mb-4 opacity-80">
-                  <div className="h-px flex-1 bg-botw-gold/50"></div>
-                  <h3 className={`${THEME.fonts.heading} text-botw-gold text-lg tracking-[0.2em] uppercase glow-text`}>FULL SEQUENCE</h3>
-                  <div className="h-px flex-1 bg-botw-gold/50"></div>
+                  <div className="h-px flex-1 bg-magical-gold/50"></div>
+                  <h3 className={`${THEME.fonts.heading} text-magical-gold text-lg tracking-[0.2em] uppercase glow-text`}>FULL SEQUENCE</h3>
+                  <div className="h-px flex-1 bg-magical-gold/50"></div>
                 </div>
 
                 <div
                   onClick={() => selectDemoMode(playthroughMode.id as any)}
-                  className={`group relative w-full py-8 px-10 bg-botw-gold/10 border border-botw-gold hover:bg-botw-gold/20 flex items-center cursor-pointer transition-all duration-300 flex-shrink-0 shadow-[0_0_30px_rgba(226,199,116,0.1)] hover:shadow-[0_0_50px_rgba(226,199,116,0.2)]`}
+                  className={`group relative w-full py-8 px-10 bg-magical-gold/10 border border-magical-gold hover:bg-magical-gold/20 flex items-center cursor-pointer transition-all duration-300 flex-shrink-0 shadow-magical-glow`}
                 >
                   {/* Content */}
                   <div className="flex-1 flex flex-col justify-center relative z-10">
-                    <h2 className={`${THEME.fonts.heading} text-3xl text-botw-gold mb-2`}>
+                    <h2 className={`${THEME.fonts.heading} text-3xl text-magical-gold mb-2`}>
                       {playthroughMode.title}
                     </h2>
-                    <p className={`${THEME.fonts.body} text-base text-botw-cream/90`}>
+                    <p className={`${THEME.fonts.body} text-base text-magical-text/90`}>
                       {playthroughMode.description}
                     </p>
                   </div>
 
                   {/* Right Side Arrow */}
-                  <div className="pl-6 text-botw-gold group-hover:translate-x-2 transition-transform duration-300">
+                  <div className="pl-6 text-magical-gold group-hover:translate-x-2 transition-transform duration-300">
                     <PlayArrowIcon className="w-8 h-8" />
                   </div>
                 </div>
@@ -586,9 +586,9 @@ const App: React.FC = () => {
             {['Combat Demo', 'Act Map Demo', 'Flow Demo', 'ETC'].map((category) => (
               <div key={category} className="w-full">
                 <div className="flex items-center gap-4 mb-4 opacity-80">
-                  <div className="h-px flex-1 bg-botw-uiBorder"></div>
-                  <h3 className={`${THEME.fonts.heading} text-botw-gold text-sm tracking-[0.2em] uppercase`}>{category}</h3>
-                  <div className="h-px flex-1 bg-botw-uiBorder"></div>
+                  <div className="h-px flex-1 bg-magical-uiBorder"></div>
+                  <h3 className={`${THEME.fonts.heading} text-magical-gold text-sm tracking-[0.2em] uppercase`}>{category}</h3>
+                  <div className="h-px flex-1 bg-magical-uiBorder"></div>
                 </div>
 
                 <div className="flex flex-col gap-3">
@@ -596,25 +596,25 @@ const App: React.FC = () => {
                     <div
                       key={mode.id}
                       onClick={() => selectDemoMode(mode.id as any)}
-                      className={`group relative w-full py-6 px-8 bg-botw-uiDark/40 border border-botw-uiBorder hover:border-botw-blue hover:bg-botw-uiDark/70 flex items-center cursor-pointer transition-all duration-300 flex-shrink-0`}
+                      className={`group relative w-full py-6 px-8 bg-magical-uiDark/40 border border-magical-uiBorder hover:border-magical-pink hover:bg-magical-uiDark/70 flex items-center cursor-pointer transition-all duration-300 flex-shrink-0`}
                     >
                       {/* Content */}
                       <div className="flex-1 flex flex-col justify-center relative z-10">
-                        <h2 className={`${THEME.fonts.heading} ${THEME.textSizes.cardTitle} ${THEME.colors.primary} group-hover:text-botw-blue transition-colors mb-1`}>
+                        <h2 className={`${THEME.fonts.heading} ${THEME.textSizes.cardTitle} ${THEME.colors.primary} group-hover:text-magical-pink transition-colors mb-1`}>
                           {mode.title}
                         </h2>
-                        <p className={`${THEME.fonts.body} text-sm text-zinc-400 group-hover:text-zinc-300 transition-colors`}>
+                        <p className={`${THEME.fonts.body} text-sm text-magical-blue group-hover:text-magical-text transition-colors opacity-70`}>
                           {mode.description}
                         </p>
                       </div>
 
                       {/* Right Side Arrow */}
-                      <div className="pl-6 text-botw-blue opacity-0 group-hover:opacity-100 transform translate-x-[-10px] group-hover:translate-x-0 transition-all duration-300">
+                      <div className="pl-6 text-magical-pink opacity-0 group-hover:opacity-100 transform translate-x-[-10px] group-hover:translate-x-0 transition-all duration-300">
                         <PlayArrowIcon className="w-6 h-6" />
                       </div>
 
                       {/* Hover Effect Overlay */}
-                      <div className="absolute inset-0 bg-botw-blue/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+                      <div className="absolute inset-0 bg-magical-pink/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
                     </div>
                   ))}
                 </div>
@@ -756,7 +756,7 @@ const App: React.FC = () => {
 
   return (
     <main
-      className="w-screen h-screen overflow-hidden text-botw-cream select-none relative bg-botw-dark"
+      className="w-screen h-screen overflow-hidden text-magical-text select-none relative bg-magical-dark"
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
     >
@@ -764,8 +764,8 @@ const App: React.FC = () => {
       <div className="vignette"></div>
       {/* Floating particles background */}
       <div className="absolute inset-0 opacity-20 pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-botw-blue/10 rounded-full blur-[100px] animate-pulse"></div>
-        <div className="absolute bottom-1/3 right-1/3 w-96 h-96 bg-botw-gold/5 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-magical-blue/10 rounded-full blur-[100px] animate-pulse"></div>
+        <div className="absolute bottom-1/3 right-1/3 w-96 h-96 bg-magical-pink/10 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '2s' }}></div>
       </div>
 
       {renderContent()}
