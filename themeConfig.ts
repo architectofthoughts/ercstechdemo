@@ -122,5 +122,11 @@ export const MODE_CONFIG = [
     title: "메모리얼 시스템",
     description: "기억의 조각을 모아 스냅샷을 기록하는 시스템",
     category: "ETC"
+  },
+  {
+    id: 'gacha',
+    title: "가챠 연출 데모",
+    description: "SSR/SR 등급에 따른 카드 연출 및 덱 스캐터링 효과",
+    category: "ETC"
   }
 ] as const;

@@ -63,6 +63,10 @@ const getCardsForCharacter = (charId: string): Card[] => {
 };
 
 
+// --- Constants ---
+const UNLOCKED_CHARACTERS = ['char_1', 'char_2', 'char_3']; // Rio, Hyunwoo, Jackie
+const CHARACTERS_WITH_SKINS = ['char_1']; // Rio
+
 // --- Main Component ---
 type Step = 'ROSTER' | 'DNA' | 'DECK';
 
@@ -76,6 +80,7 @@ interface CharacterSelectDemoProps {
 const CharacterSelectDemo: React.FC<CharacterSelectDemoProps> = ({ onBackToMenu, onComplete, onStepChange, initialStep = 'ROSTER' }) => {
     const [step, setStep] = useState<Step>(initialStep);
     const [selectedIds, setSelectedIds] = useState<string[]>([]);
+    const [selectedSkins, setSelectedSkins] = useState<Record<string, string>>({}); // Map charId -> skinId (or 'default')
     const [generatedDNACard, setGeneratedDNACard] = useState<Card | null>(null);
 
     // Notify parent of step changes
@@ -92,6 +97,13 @@ const CharacterSelectDemo: React.FC<CharacterSelectDemoProps> = ({ onBackToMenu,
                 setSelectedIds(prev => [...prev, id]);
             }
         }
+    };
+
+    const handleSkinChange = (charId: string, skinId: string) => {
+        setSelectedSkins(prev => ({
+            ...prev,
+            [charId]: skinId
+        }));
     };
 
     const getSelectedCharacter = (index: number): CharacterEntry | undefined => {
@@ -177,18 +189,29 @@ const CharacterSelectDemo: React.FC<CharacterSelectDemoProps> = ({ onBackToMenu,
                     <div className="flex-1 overflow-y-auto scrollbar-hide flex items-center justify-center">
                         <div className="grid grid-cols-5 gap-4 w-full max-w-4xl">
                             {CHARACTER_ROSTER.map(char => {
+                                const isUnlocked = UNLOCKED_CHARACTERS.includes(char.id);
                                 const isSelected = selectedIds.includes(char.id);
-                                const isDisabled = !isSelected && selectedIds.length >= 2;
-                                const imagePath = getAssetPath('characters', char.id) || char.imageUrl;
+                                const isDisabled = (!isSelected && selectedIds.length >= 2) || !isUnlocked;
+
+                                // Determine image to show (default or skin if selected)
+                                // For the roster grid, we usually show the default, or maybe the selected skin if it's selected?
+                                // Let's show the default in the roster for consistency, or the selected skin if the user picked one.
+                                // The user said "Skin change is on the right side".
+                                // So roster probably stays default, OR updates if we want to be fancy. 
+                                // Let's keep roster as default for now to avoid confusion, or update it if selected.
+                                const currentSkin = selectedSkins[char.id] || 'default';
+                                const assetId = currentSkin === 'default' ? char.id : `${char.id}_skin_1`;
+                                const imagePath = getAssetPath('characters', assetId) || char.imageUrl;
 
                                 return (
                                     <div
                                         key={char.id}
-                                        onClick={() => !isDisabled && toggleCharacter(char.id)}
+                                        onClick={() => isUnlocked && !isDisabled && toggleCharacter(char.id)}
                                         className={`
-                                            group relative aspect-[9/16] cursor-pointer transition-all duration-300
-                                            ${isSelected ? 'transform scale-95 z-10 ring-2 ring-botw-blue' : 'hover:scale-105'}
-                                            ${isDisabled ? 'opacity-30 grayscale' : ''}
+                                            group relative aspect-[9/16] transition-all duration-300
+                                            ${isUnlocked ? 'cursor-pointer' : 'cursor-not-allowed'}
+                                            ${isSelected ? 'transform scale-95 z-10 ring-2 ring-botw-blue' : (isUnlocked && !isDisabled ? 'hover:scale-105' : '')}
+                                            ${isDisabled && isUnlocked ? 'opacity-30 grayscale' : ''}
                                         `}
                                     >
                                         {/* Card Frame */}
@@ -196,19 +219,30 @@ const CharacterSelectDemo: React.FC<CharacterSelectDemoProps> = ({ onBackToMenu,
 
                                         {/* Image */}
                                         <div className="absolute inset-0 bg-zinc-900 overflow-hidden">
-                                            <img
-                                                src={imagePath}
-                                                alt={char.name}
-                                                className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
-                                            />
-                                            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent"></div>
+                                            {isUnlocked ? (
+                                                <>
+                                                    <img
+                                                        src={imagePath}
+                                                        alt={char.name}
+                                                        className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+                                                    />
+                                                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent"></div>
+                                                </>
+                                            ) : (
+                                                <div className="w-full h-full flex items-center justify-center bg-zinc-950">
+                                                    <div className="absolute inset-0 bg-zinc-800 opacity-20"></div>
+                                                    <span className="text-4xl text-zinc-700 font-serif opacity-50 blur-[2px]">?</span>
+                                                </div>
+                                            )}
                                         </div>
 
                                         {/* Mini Info */}
-                                        <div className="absolute bottom-2 left-0 w-full text-center z-30">
-                                            <div className="text-[0.5rem] text-botw-blue tracking-widest uppercase bg-black/50 py-1 mb-1">{char.role}</div>
-                                            <div className={`font-serif font-bold text-xs ${isSelected ? 'text-botw-blue' : 'text-zinc-300'}`}>{char.name}</div>
-                                        </div>
+                                        {isUnlocked && (
+                                            <div className="absolute bottom-2 left-0 w-full text-center z-30">
+                                                <div className="text-[0.5rem] text-botw-blue tracking-widest uppercase bg-black/50 py-1 mb-1">{char.role}</div>
+                                                <div className={`font-serif font-bold text-xs ${isSelected ? 'text-botw-blue' : 'text-zinc-300'}`}>{char.name}</div>
+                                            </div>
+                                        )}
 
                                         {/* Selected Overlay */}
                                         {isSelected && (
@@ -230,10 +264,20 @@ const CharacterSelectDemo: React.FC<CharacterSelectDemoProps> = ({ onBackToMenu,
                     </div>
 
                     {/* Slot 1 */}
-                    <SelectedSlot character={getSelectedCharacter(0)} label="Leader" />
+                    <SelectedSlot
+                        character={getSelectedCharacter(0)}
+                        label="Leader"
+                        selectedSkin={getSelectedCharacter(0) ? (selectedSkins[getSelectedCharacter(0)!.id] || 'default') : 'default'}
+                        onSkinChange={handleSkinChange}
+                    />
 
                     {/* Slot 2 */}
-                    <SelectedSlot character={getSelectedCharacter(1)} label="Support" />
+                    <SelectedSlot
+                        character={getSelectedCharacter(1)}
+                        label="Support"
+                        selectedSkin={getSelectedCharacter(1) ? (selectedSkins[getSelectedCharacter(1)!.id] || 'default') : 'default'}
+                        onSkinChange={handleSkinChange}
+                    />
 
                     {/* Confirm Button */}
                     <div className="mt-auto">
@@ -257,15 +301,41 @@ const CharacterSelectDemo: React.FC<CharacterSelectDemoProps> = ({ onBackToMenu,
 };
 
 // Sub-component for the right sidebar slots
-const SelectedSlot: React.FC<{ character?: CharacterEntry, label: string }> = ({ character, label }) => {
+const SelectedSlot: React.FC<{
+    character?: CharacterEntry,
+    label: string,
+    selectedSkin: string,
+    onSkinChange: (charId: string, skinId: string) => void
+}> = ({ character, label, selectedSkin, onSkinChange }) => {
+
+    const hasSkins = character && CHARACTERS_WITH_SKINS.includes(character.id);
+    const assetId = character ? (selectedSkin === 'default' ? character.id : `${character.id}_skin_1`) : '';
+    const imagePath = character ? (getAssetPath('characters', assetId) || character.imageUrl) : '';
+
     return (
         <div className="flex-1 relative min-h-0 flex flex-col items-center justify-center">
-            <div className="text-xs text-zinc-500 mb-1 font-serif uppercase w-full text-left">{label}</div>
+            <div className="text-xs text-zinc-500 mb-1 font-serif uppercase w-full text-left flex justify-between items-center">
+                <span>{label}</span>
+                {hasSkins && (
+                    <div className="flex gap-1">
+                        <button
+                            onClick={() => onSkinChange(character!.id, 'default')}
+                            className={`w-4 h-4 rounded-full border ${selectedSkin === 'default' ? 'bg-botw-gold border-botw-gold' : 'bg-transparent border-zinc-600 hover:border-botw-gold'}`}
+                            title="Default Skin"
+                        />
+                        <button
+                            onClick={() => onSkinChange(character!.id, 'skin_1')}
+                            className={`w-4 h-4 rounded-full border ${selectedSkin === 'skin_1' ? 'bg-magical-pink border-magical-pink' : 'bg-transparent border-zinc-600 hover:border-magical-pink'}`}
+                            title="Alternate Skin"
+                        />
+                    </div>
+                )}
+            </div>
 
             <div className={`relative transition-all duration-500 overflow-hidden aspect-[9/16] h-full ${character ? 'border border-botw-gold/30 bg-zinc-900' : 'border border-dashed border-zinc-800 bg-transparent flex items-center justify-center w-full'}`}>
                 {character ? (
                     <>
-                        <img src={getAssetPath('characters', character.id) || character.imageUrl} alt={character.name} className="absolute inset-0 w-full h-full object-cover opacity-60" />
+                        <img src={imagePath} alt={character.name} className="absolute inset-0 w-full h-full object-cover opacity-60" />
                         <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
                         <div className="absolute bottom-0 left-0 w-full p-4">
                             <div className="flex items-center gap-2 mb-1">

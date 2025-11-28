@@ -22,7 +22,7 @@ import ActSelectScreen from './components/ActSelectScreen';
 import GuideSubtitle from './components/GuideSubtitle';
 import { GUIDE_TEXTS } from './src/guideTexts';
 
-type DemoMode = 'select' | 'finale' | 'multiPlay' | 'spinning' | 'destinyDraw' | 'map' | 'characterSelect' | 'memorial' | 'reward' | 'extraction' | 'actClear' | 'dna' | 'event' | 'actPlay' | 'playthrough';
+type DemoMode = 'select' | 'finale' | 'multiPlay' | 'spinning' | 'destinyDraw' | 'map' | 'characterSelect' | 'memorial' | 'reward' | 'extraction' | 'actClear' | 'dna' | 'event' | 'actPlay' | 'playthrough' | 'gacha';
 
 type PlaythroughStep = 'TITLE' | 'MAIN_MENU' | 'CHAR_SELECT' | 'DNA' | 'DECK_PREVIEW' | 'ACT_SELECT' | 'MAP' | 'BATTLE' | 'REWARD' | 'MAP_SELECT_EVENT' | 'EVENT' | 'MAP_SELECT_BOSS' | 'BOSS_BATTLE' | 'ACT_CLEAR' | 'EXTRACTION' | 'MAIN_MENU_2' | 'GACHA' | 'MEMORIAL_END';
 
@@ -751,6 +751,10 @@ const App: React.FC = () => {
           </button>
         </div>
       );
+    }
+
+    if (demoMode === 'gacha') {
+      return <GachaScene onComplete={() => resetGame('select')} />;
     }
 
     if (demoMode === 'actPlay') {

@@ -33,11 +33,11 @@ export const ASSET_IMAGES: Record<AssetCategory, AssetMap> = {
         '9002': '/assets/cards/9002.png',
 
         // Reward Cards
-        '801': '/assets/cards/305.png', // Divine Strike -> Execute (Placeholder)
-        '802': '/assets/cards/203.png', // Ancient Shield -> Guard (Placeholder)
-        '803': '/assets/cards/204.png', // Time Warp -> Flex (Placeholder)
+        '801': '/assets/cards/9003.png', // 
+        '802': '/assets/cards/9004.png', // 
+        '803': '/assets/cards/9005.png', // 
         // DNA Card
-        'dna_result': '/assets/cards/9001.png', // DNA Result -> Unique Skill 1 (Placeholder)
+        'dna_result': '/assets/cards/9006.png', // DNA Result -> Unique Skill 1 (Placeholder)
     },
     events: {
         'shrine': '/assets/events/shrine.jpg',
@@ -49,7 +49,10 @@ export const ASSET_IMAGES: Record<AssetCategory, AssetMap> = {
         '3': '/assets/common/3.png',
     },
     characters: {
-        'char_1': '/assets/chars/rio.png',
+        'char_1': '/assets/chars/Rio.jpg',
+        'char_2': '/assets/chars/Hyunwoo.jpg',
+        'char_3': '/assets/chars/Jackie.jpg',
+        'char_1_skin_1': '/assets/memorial/card_schoolgirl.png', // Placeholder for Rio's skin
     },
     guide: {
         'rumi_portrait': '/assets/common/rumi.jpg',
