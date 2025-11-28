@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { THEME } from '../themeConfig';
+import { getAssetPath } from '../src/assetConfig';
 
 interface ActSelectScreenProps {
     onSelectAct: (actNumber: number) => void;
@@ -39,52 +40,62 @@ const ActSelectScreen: React.FC<ActSelectScreenProps> = ({ onSelectAct, onBackTo
 
             {/* Act Cards */}
             <div className="flex gap-8 z-10">
-                {acts.map((act, index) => (
-                    <motion.div
-                        key={act.id}
-                        initial={{ opacity: 0, y: 50 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: index * 0.2 }}
-                        onClick={() => !act.locked && onSelectAct(act.id)}
-                        className={`
+                {acts.map((act, index) => {
+                    const imagePath = getAssetPath('acts', act.id);
+                    return (
+                        <motion.div
+                            key={act.id}
+                            initial={{ opacity: 0, y: 50 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: index * 0.2 }}
+                            onClick={() => !act.locked && onSelectAct(act.id)}
+                            className={`
               relative w-64 h-96 border transition-all duration-300 group
               ${act.locked
-                                ? 'border-zinc-800 bg-zinc-900/50 cursor-not-allowed grayscale opacity-50'
-                                : 'border-botw-uiBorder bg-botw-uiDark cursor-pointer hover:border-botw-gold hover:-translate-y-2 hover:shadow-[0_0_30px_rgba(226,199,116,0.2)]'
-                            }
+                                    ? 'border-zinc-800 bg-zinc-900/50 cursor-not-allowed grayscale opacity-50'
+                                    : 'border-botw-uiBorder bg-botw-uiDark cursor-pointer hover:border-botw-gold hover:-translate-y-2 hover:shadow-[0_0_30px_rgba(226,199,116,0.2)]'
+                                }
             `}
-                    >
-                        {/* Image Placeholder */}
-                        <div className={`absolute inset-0 ${act.imageColor} opacity-20 transition-opacity group-hover:opacity-40`} />
-
-                        {/* Content */}
-                        <div className="absolute inset-0 p-6 flex flex-col items-center justify-center text-center">
-                            <div className="text-6xl font-serif font-bold mb-4 opacity-20">{act.id}</div>
-                            <h2 className={`${THEME.fonts.heading} text-3xl mb-2 ${act.locked ? 'text-zinc-600' : 'text-botw-cream'}`}>
-                                {act.title}
-                            </h2>
-                            <p className="text-xs tracking-widest uppercase opacity-60">
-                                {act.subtitle}
-                            </p>
-
-                            {act.locked && (
-                                <div className="mt-8 px-4 py-1 border border-zinc-700 text-zinc-500 text-[0.6rem] tracking-widest uppercase">
-                                    LOCKED
-                                </div>
+                        >
+                            {/* Image Placeholder */}
+                            <div className={`absolute inset-0 ${act.imageColor} opacity-20 transition-opacity group-hover:opacity-40`} />
+                            {imagePath && (
+                                <img
+                                    src={imagePath}
+                                    alt={act.title}
+                                    className="absolute inset-0 w-full h-full object-cover opacity-30 group-hover:opacity-50 transition-opacity mix-blend-overlay"
+                                />
                             )}
-                        </div>
 
-                        {/* Decorative Corners */}
-                        {!act.locked && (
-                            <>
-                                <div className="absolute top-2 left-2 w-2 h-2 border-t border-l border-botw-gold opacity-0 group-hover:opacity-100 transition-opacity" />
-                                <div className="absolute top-2 right-2 w-2 h-2 border-t border-r border-botw-gold opacity-0 group-hover:opacity-100 transition-opacity" />
-                                <div className="absolute bottom-2 left-2 w-2 h-2 border-b border-l border-botw-gold opacity-0 group-hover:opacity-100 transition-opacity" />
-                                <div className="absolute bottom-2 right-2 w-2 h-2 border-b border-r border-botw-gold opacity-0 group-hover:opacity-100 transition-opacity" />
-                            </>
-                        )}
-                    </motion.div>
-                ))}
+                            {/* Content */}
+                            <div className="absolute inset-0 p-6 flex flex-col items-center justify-center text-center">
+                                <div className="text-6xl font-serif font-bold mb-4 opacity-20">{act.id}</div>
+                                <h2 className={`${THEME.fonts.heading} text-3xl mb-2 ${act.locked ? 'text-zinc-600' : 'text-botw-cream'}`}>
+                                    {act.title}
+                                </h2>
+                                <p className="text-xs tracking-widest uppercase opacity-60">
+                                    {act.subtitle}
+                                </p>
+
+                                {act.locked && (
+                                    <div className="mt-8 px-4 py-1 border border-zinc-700 text-zinc-500 text-[0.6rem] tracking-widest uppercase">
+                                        LOCKED
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* Decorative Corners */}
+                            {!act.locked && (
+                                <>
+                                    <div className="absolute top-2 left-2 w-2 h-2 border-t border-l border-botw-gold opacity-0 group-hover:opacity-100 transition-opacity" />
+                                    <div className="absolute top-2 right-2 w-2 h-2 border-t border-r border-botw-gold opacity-0 group-hover:opacity-100 transition-opacity" />
+                                    <div className="absolute bottom-2 left-2 w-2 h-2 border-b border-l border-botw-gold opacity-0 group-hover:opacity-100 transition-opacity" />
+                                    <div className="absolute bottom-2 right-2 w-2 h-2 border-b border-r border-botw-gold opacity-0 group-hover:opacity-100 transition-opacity" />
+                                </>
+                            )}
+                        </motion.div>
+                    )
+                })}
             </div>
         </div>
     );

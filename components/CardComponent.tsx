@@ -1,6 +1,7 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Card, CardType } from '../types';
 import { SwordIcon, ShieldIcon } from './icons';
+import { getAssetPath } from '../src/assetConfig';
 
 interface CardProps {
   card: Card;
@@ -23,6 +24,9 @@ const CardComponent: React.FC<CardProps> = ({ card, playerMana, isAnimating, sty
 
   const textColor = isAffordable ? 'text-magical-text' : 'text-zinc-500';
   const costColor = isAffordable ? 'text-magical-gold' : 'text-zinc-500';
+
+  const imagePath = getAssetPath('cards', card.id);
+  const [imageError, setImageError] = useState(false);
 
   const longPressTimeout = useRef<number | null>(null);
 
@@ -82,15 +86,27 @@ const CardComponent: React.FC<CardProps> = ({ card, playerMana, isAnimating, sty
         {/* Art / Icon Area */}
         <div className="w-full h-24 my-1 flex items-center justify-center relative group-hover:bg-white/5 transition-colors rounded-sm overflow-hidden">
           <div className={`absolute inset-0 border border-white/5 ${isAffordable ? 'group-hover:border-magical-gold/30' : ''}`}></div>
-          {card.type === CardType.ATTACK ? (
-            <SwordIcon className={`w-10 h-10 ${isAffordable ? 'text-magical-pink drop-shadow-[0_0_8px_rgba(255,105,180,0.6)]' : ''}`} />
+
+          {imagePath && !imageError ? (
+            <img
+              src={imagePath}
+              alt={card.name}
+              className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity"
+              onError={() => setImageError(true)}
+            />
           ) : (
-            <ShieldIcon className={`w-10 h-10 ${isAffordable ? 'text-magical-blue drop-shadow-[0_0_8px_rgba(77,232,254,0.6)]' : ''}`} />
+            <>
+              {card.type === CardType.ATTACK ? (
+                <SwordIcon className={`w-10 h-10 ${isAffordable ? 'text-magical-pink drop-shadow-[0_0_8px_rgba(255,105,180,0.6)]' : ''}`} />
+              ) : (
+                <ShieldIcon className={`w-10 h-10 ${isAffordable ? 'text-magical-blue drop-shadow-[0_0_8px_rgba(77,232,254,0.6)]' : ''}`} />
+              )}
+              {/* Decorative faint circle behind icon */}
+              <div className="absolute inset-0 flex items-center justify-center opacity-10">
+                <div className="w-16 h-16 border border-dashed border-white rounded-full animate-[spin_20s_linear_infinite]"></div>
+              </div>
+            </>
           )}
-          {/* Decorative faint circle behind icon */}
-          <div className="absolute inset-0 flex items-center justify-center opacity-10">
-            <div className="w-16 h-16 border border-dashed border-white rounded-full animate-[spin_20s_linear_infinite]"></div>
-          </div>
         </div>
 
         {/* Name & Type */}

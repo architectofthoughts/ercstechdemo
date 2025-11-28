@@ -19,6 +19,8 @@ import MemorialApp from './memorial/App';
 import DNAScreen from './components/DNAScreen';
 import EventDemo from './components/EventDemo';
 import ActSelectScreen from './components/ActSelectScreen';
+import GuideSubtitle from './components/GuideSubtitle';
+import { GUIDE_TEXTS } from './src/guideTexts';
 
 type DemoMode = 'select' | 'finale' | 'multiPlay' | 'spinning' | 'destinyDraw' | 'map' | 'characterSelect' | 'memorial' | 'reward' | 'extraction' | 'actClear' | 'dna' | 'event' | 'actPlay' | 'playthrough';
 
@@ -424,17 +426,61 @@ const App: React.FC = () => {
             />
           );
         case 'CHAR_SELECT':
-          return <CharacterSelectDemo onBackToMenu={() => resetGame('select')} onComplete={() => setPlaythroughStep('DNA')} />;
+          return <CharacterSelectDemo
+            onBackToMenu={() => resetGame('select')}
+            onComplete={() => setPlaythroughStep('ACT_SELECT')}
+            onStepChange={(step) => {
+              if (step === 'ROSTER') setPlaythroughStep('CHAR_SELECT');
+              if (step === 'DNA') setPlaythroughStep('DNA');
+              if (step === 'DECK') setPlaythroughStep('DECK_PREVIEW');
+            }}
+          />;
         case 'DNA':
-          // DNAScreen is handled inside CharacterSelectDemo if we let it, but here we split it?
-          // Wait, CharacterSelectDemo handles DNA internally. 
-          // My previous edit to CharacterSelectDemo makes it go to StartingDeckScreen (DECK step) and then calls onComplete.
-          // So CharacterSelectDemo encapsulates Select -> DNA -> Deck.
-          // So I don't need 'DNA' and 'DECK_PREVIEW' steps in App.tsx if CharacterSelectDemo handles them.
-          // But I defined them in PlaythroughStep. I can just skip them or use them if I refactor.
-          // For now, let CharacterSelectDemo handle it.
-          // So onComplete of CharacterSelectDemo should go to ACT_SELECT.
-          return <CharacterSelectDemo onBackToMenu={() => resetGame('select')} onComplete={() => setPlaythroughStep('ACT_SELECT')} />;
+          // We need to render CharacterSelectDemo but force it to show DNA screen?
+          // Actually CharacterSelectDemo manages its own state. 
+          // To split the "steps" for the guide text, we need to know which internal step CharacterSelectDemo is in.
+          // But CharacterSelectDemo doesn't expose that easily without refactoring.
+          // ALTERNATIVE: We can pass a prop to CharacterSelectDemo to tell it to notify us of step changes?
+          // OR, we can just rely on the fact that CharacterSelectDemo calls onComplete when it's done with EVERYTHING.
+          // But the user wants different text for Char Select, DNA, and Deck Confirm.
+          // So we should probably let App.tsx control the flow if possible, or pass a callback.
+
+          // Let's modify CharacterSelectDemo to accept an `onStepChange` callback if we want to track it, 
+          // OR we can just use the `playthroughStep` if we break down CharacterSelectDemo.
+
+          // For now, let's assume CharacterSelectDemo handles the UI, but we want to update the guide text.
+          // Since we can't easily see inside CharacterSelectDemo from here without refactoring it to be controlled,
+          // let's try to pass the current internal step out?
+
+          // Actually, the easiest way without major refactor is to just use one step 'CHAR_SELECT' 
+          // and maybe have CharacterSelectDemo take a prop for "subtitle override" or something?
+          // No, the request is to split them in the "Full Playthrough".
+
+          // Let's look at CharacterSelectDemo again. It has internal state `step`.
+          // We can lift that state up or pass a callback `onStepChange`.
+          return <CharacterSelectDemo
+            onBackToMenu={() => resetGame('select')}
+            onComplete={() => setPlaythroughStep('ACT_SELECT')}
+            onStepChange={(step) => {
+              if (step === 'ROSTER') setPlaythroughStep('CHAR_SELECT');
+              if (step === 'DNA') setPlaythroughStep('DNA');
+              if (step === 'DECK') setPlaythroughStep('DECK_PREVIEW');
+            }}
+          />;
+        case 'DECK_PREVIEW':
+          // This is just a placeholder state for the guide text, the UI is still CharacterSelectDemo
+          // We need to keep rendering CharacterSelectDemo.
+          // So we should probably combine these cases or handle the render logic carefully.
+          return <CharacterSelectDemo
+            onBackToMenu={() => resetGame('select')}
+            onComplete={() => setPlaythroughStep('ACT_SELECT')}
+            onStepChange={(step) => {
+              if (step === 'ROSTER') setPlaythroughStep('CHAR_SELECT');
+              if (step === 'DNA') setPlaythroughStep('DNA');
+              if (step === 'DECK') setPlaythroughStep('DECK_PREVIEW');
+            }}
+            initialStep={playthroughStep === 'DNA' ? 'DNA' : playthroughStep === 'DECK_PREVIEW' ? 'DECK' : 'ROSTER'}
+          />;
         case 'ACT_SELECT':
           return <ActSelectScreen onSelectAct={() => setPlaythroughStep('MAP')} onBackToMenu={() => resetGame('select')} />;
         case 'MAP':
@@ -769,6 +815,37 @@ const App: React.FC = () => {
       </div>
 
       {renderContent()}
+
+      <GuideSubtitle
+        text={
+          demoMode === 'finale' ? GUIDE_TEXTS.combat.finale :
+            demoMode === 'multiPlay' ? GUIDE_TEXTS.combat.multiPlay :
+              demoMode === 'spinning' ? GUIDE_TEXTS.combat.spinning :
+                demoMode === 'destinyDraw' ? GUIDE_TEXTS.combat.destinyDraw :
+                  demoMode === 'playthrough' ? (
+                    playthroughStep === 'TITLE' ? GUIDE_TEXTS.playthrough.title :
+                      playthroughStep === 'MAIN_MENU' ? GUIDE_TEXTS.playthrough.mainMenu :
+                        playthroughStep === 'CHAR_SELECT' ? GUIDE_TEXTS.playthrough.charSelect :
+                          playthroughStep === 'DNA' ? GUIDE_TEXTS.playthrough.dna :
+                            playthroughStep === 'DECK_PREVIEW' ? GUIDE_TEXTS.playthrough.deckConfirm :
+                              playthroughStep === 'ACT_SELECT' ? GUIDE_TEXTS.playthrough.actSelect :
+                                playthroughStep === 'MAP' ? GUIDE_TEXTS.playthrough.map :
+                                  playthroughStep === 'BATTLE' ? GUIDE_TEXTS.playthrough.battle :
+                                    playthroughStep === 'REWARD' ? GUIDE_TEXTS.playthrough.reward :
+                                      playthroughStep === 'MAP_SELECT_EVENT' ? GUIDE_TEXTS.playthrough.mapSelectEvent :
+                                        playthroughStep === 'EVENT' ? GUIDE_TEXTS.playthrough.event :
+                                          playthroughStep === 'MAP_SELECT_BOSS' ? GUIDE_TEXTS.playthrough.mapSelectBoss :
+                                            playthroughStep === 'BOSS_BATTLE' ? GUIDE_TEXTS.playthrough.bossBattle :
+                                              playthroughStep === 'ACT_CLEAR' ? GUIDE_TEXTS.playthrough.actClear :
+                                                playthroughStep === 'EXTRACTION' ? GUIDE_TEXTS.playthrough.extraction :
+                                                  playthroughStep === 'MAIN_MENU_2' ? GUIDE_TEXTS.playthrough.mainMenu2 :
+                                                    playthroughStep === 'GACHA' ? GUIDE_TEXTS.playthrough.gacha :
+                                                      playthroughStep === 'MEMORIAL_END' ? GUIDE_TEXTS.playthrough.memorialEnd :
+                                                        ""
+                  ) : ""
+        }
+        visible={['finale', 'multiPlay', 'spinning', 'destinyDraw', 'playthrough'].includes(demoMode)}
+      />
     </main>
   );
 };

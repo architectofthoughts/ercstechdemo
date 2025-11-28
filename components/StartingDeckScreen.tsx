@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { THEME } from '../themeConfig';
 import { Card, CardType } from '../types';
+import { getAssetPath } from '../src/assetConfig';
 
 interface StartingDeckScreenProps {
     deck: Card[];
@@ -35,10 +36,18 @@ const StartingDeckScreen: React.FC<StartingDeckScreenProps> = ({ deck, onStartGa
 
             {/* Image Placeholder */}
             <div className={`w-full h-20 rounded mb-1 ${card.type === CardType.ATTACK ? 'bg-red-900/40' :
-                    card.type === CardType.SKILL ? 'bg-blue-900/40' :
-                        'bg-yellow-900/40'
-                } flex items-center justify-center`}>
-                <span className="text-[0.6rem] opacity-50 uppercase tracking-widest">{CardType[card.type]}</span>
+                card.type === CardType.SKILL ? 'bg-blue-900/40' :
+                    'bg-yellow-900/40'
+                } flex items-center justify-center relative overflow-hidden`}>
+                {getAssetPath('cards', card.id) ? (
+                    <img
+                        src={getAssetPath('cards', card.id)}
+                        alt={card.name}
+                        className="absolute inset-0 w-full h-full object-cover opacity-80"
+                    />
+                ) : (
+                    <span className="text-[0.6rem] opacity-50 uppercase tracking-widest">{CardType[card.type]}</span>
+                )}
             </div>
 
             {/* Name */}

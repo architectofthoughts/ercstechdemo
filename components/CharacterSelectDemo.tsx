@@ -4,6 +4,7 @@ import { PlusIcon } from './icons';
 import DNAScreen from './DNAScreen';
 import StartingDeckScreen from './StartingDeckScreen';
 import { Card, CardType } from '../types';
+import { getAssetPath } from '../src/assetConfig';
 
 // --- Mock Data for Starting Cards ---
 const ROLE_CARDS: Record<string, Card[]> = {
@@ -63,12 +64,24 @@ const getCardsForCharacter = (charId: string): Card[] => {
 
 
 // --- Main Component ---
-type Step = 'SELECT' | 'DNA' | 'DECK';
+type Step = 'ROSTER' | 'DNA' | 'DECK';
 
-const CharacterSelectDemo: React.FC<{ onBackToMenu: () => void, onComplete?: () => void }> = ({ onBackToMenu, onComplete }) => {
-    const [step, setStep] = useState<Step>('SELECT');
+interface CharacterSelectDemoProps {
+    onBackToMenu: () => void;
+    onComplete?: () => void;
+    onStepChange?: (step: Step) => void;
+    initialStep?: Step;
+}
+
+const CharacterSelectDemo: React.FC<CharacterSelectDemoProps> = ({ onBackToMenu, onComplete, onStepChange, initialStep = 'ROSTER' }) => {
+    const [step, setStep] = useState<Step>(initialStep);
     const [selectedIds, setSelectedIds] = useState<string[]>([]);
     const [generatedDNACard, setGeneratedDNACard] = useState<Card | null>(null);
+
+    // Notify parent of step changes
+    React.useEffect(() => {
+        onStepChange?.(step);
+    }, [step, onStepChange]);
 
     // --- Step 1: Selection Logic ---
     const toggleCharacter = (id: string) => {
@@ -130,7 +143,7 @@ const CharacterSelectDemo: React.FC<{ onBackToMenu: () => void, onComplete?: () 
 
     // --- Render ---
     if (step === 'DNA') {
-        return <DNAScreen onBackToMenu={() => setStep('SELECT')} onComplete={handleDNAComplete} />;
+        return <DNAScreen onBackToMenu={() => setStep('ROSTER')} onComplete={handleDNAComplete} />;
     }
 
     if (step === 'DECK') {
@@ -166,6 +179,7 @@ const CharacterSelectDemo: React.FC<{ onBackToMenu: () => void, onComplete?: () 
                             {CHARACTER_ROSTER.map(char => {
                                 const isSelected = selectedIds.includes(char.id);
                                 const isDisabled = !isSelected && selectedIds.length >= 2;
+                                const imagePath = getAssetPath('characters', char.id) || char.imageUrl;
 
                                 return (
                                     <div
@@ -183,7 +197,7 @@ const CharacterSelectDemo: React.FC<{ onBackToMenu: () => void, onComplete?: () 
                                         {/* Image */}
                                         <div className="absolute inset-0 bg-zinc-900 overflow-hidden">
                                             <img
-                                                src={char.imageUrl}
+                                                src={imagePath}
                                                 alt={char.name}
                                                 className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
                                             />
@@ -251,7 +265,7 @@ const SelectedSlot: React.FC<{ character?: CharacterEntry, label: string }> = ({
             <div className={`flex-1 border relative transition-all duration-500 overflow-hidden ${character ? 'border-botw-gold/30 bg-zinc-900' : 'border-dashed border-zinc-800 bg-transparent flex items-center justify-center'}`}>
                 {character ? (
                     <>
-                        <img src={character.imageUrl} alt={character.name} className="absolute inset-0 w-full h-full object-cover opacity-60" />
+                        <img src={getAssetPath('characters', character.id) || character.imageUrl} alt={character.name} className="absolute inset-0 w-full h-full object-cover opacity-60" />
                         <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
                         <div className="absolute bottom-0 left-0 w-full p-4">
                             <div className="flex items-center gap-2 mb-1">

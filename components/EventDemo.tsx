@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { THEME } from '../themeConfig';
 import { PlayArrowIcon } from './icons';
+import { getAssetPath } from '../src/assetConfig';
 
 // --- Types ---
 interface GameEventChoice {
@@ -114,6 +115,13 @@ const EventDemo: React.FC<EventDemoProps> = ({ onBackToMenu, singleEvent = false
     const [isTransitioning, setIsTransitioning] = useState(false);
 
     const currentEvent = EVENTS[currentEventIndex];
+    const imagePath = getAssetPath('events', currentEvent.id);
+    const [imageError, setImageError] = useState(false);
+
+    // Reset error state when event changes
+    React.useEffect(() => {
+        setImageError(false);
+    }, [currentEvent.id]);
 
     const handleChoice = (choice: GameEventChoice) => {
         const changes = choice.effect(gameState);
@@ -188,13 +196,24 @@ const EventDemo: React.FC<EventDemoProps> = ({ onBackToMenu, singleEvent = false
                     >
                         {/* Left Image Area */}
                         <div className={`w-1/3 h-full ${currentEvent.imageColor} relative overflow-hidden`}>
-                            <div className="absolute inset-0 bg-black/20" />
-                            <div className="absolute inset-0 flex items-center justify-center">
-                                <span className="text-9xl opacity-20 font-serif text-white">?</span>
-                            </div>
-                            {/* Decorative lines */}
-                            <div className="absolute top-8 left-8 right-8 h-px bg-white/20" />
-                            <div className="absolute bottom-8 left-8 right-8 h-px bg-white/20" />
+                            {imagePath && !imageError ? (
+                                <img
+                                    src={imagePath}
+                                    alt={currentEvent.title}
+                                    className="absolute inset-0 w-full h-full object-cover"
+                                    onError={() => setImageError(true)}
+                                />
+                            ) : (
+                                <>
+                                    <div className="absolute inset-0 bg-black/20" />
+                                    <div className="absolute inset-0 flex items-center justify-center">
+                                        <span className="text-9xl opacity-20 font-serif text-white">?</span>
+                                    </div>
+                                    {/* Decorative lines */}
+                                    <div className="absolute top-8 left-8 right-8 h-px bg-white/20" />
+                                    <div className="absolute bottom-8 left-8 right-8 h-px bg-white/20" />
+                                </>
+                            )}
                         </div>
 
                         {/* Right Content Area */}

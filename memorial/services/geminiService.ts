@@ -1,7 +1,7 @@
-import { GoogleGenAI, SchemaType, Type } from "@google/genai";
+import { GoogleGenAI, Type } from "@google/genai";
 import { Rarity } from "../types";
 
-const apiKey = process.env.API_KEY || ""; 
+const apiKey = process.env.API_KEY || "";
 const ai = new GoogleGenAI({ apiKey });
 
 /**
@@ -10,7 +10,7 @@ const ai = new GoogleGenAI({ apiKey });
 export const analyzeCardImage = async (base64Image: string, mimeType: string = "image/jpeg") => {
   try {
     const model = "gemini-2.5-flash";
-    
+
     const prompt = `
       Analyze this game character card image.
       1. Identify the Rarity (e.g., Unique, Mystic Rare).
@@ -23,13 +23,13 @@ export const analyzeCardImage = async (base64Image: string, mimeType: string = "
       model: model,
       contents: {
         parts: [
-            { text: prompt },
-            {
-                inlineData: {
-                    mimeType: mimeType,
-                    data: base64Image
-                }
+          { text: prompt },
+          {
+            inlineData: {
+              mimeType: mimeType,
+              data: base64Image
             }
+          }
         ]
       },
       config: {
@@ -58,10 +58,10 @@ export const analyzeCardImage = async (base64Image: string, mimeType: string = "
  * Generates a witty acquisition title/method string based on input parameters.
  */
 export const generateAcquisitionLog = async (signingCount: number, sessionName: string) => {
-   try {
+  try {
     const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash',
-        contents: `Create a short, dry, system-log style sentence in Korean for a game UI.
+      model: 'gemini-2.5-flash',
+      contents: `Create a short, dry, system-log style sentence in Korean for a game UI.
         Context: A player obtained a card.
         Details: Session "${sessionName}", Signing attempt #${signingCount}.
         Format: "HH:MM:SS, [Description]" (Only return the description part).
@@ -69,7 +69,7 @@ export const generateAcquisitionLog = async (signingCount: number, sessionName: 
         `
     });
     return response.text.trim();
-   } catch (e) {
-       return `${sessionName} ${signingCount}번째 Signing으로 획득`;
-   }
+  } catch (e) {
+    return `${sessionName} ${signingCount}번째 Signing으로 획득`;
+  }
 }
