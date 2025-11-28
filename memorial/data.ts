@@ -1,5 +1,6 @@
 
 import { Rarity, SnapshotEntry } from './types';
+import { getAssetPath } from '../src/assetConfig';
 
 // Application Text Configuration
 export const APP_TEXTS = {
@@ -43,7 +44,7 @@ export const INITIAL_SNAPSHOTS: SnapshotEntry[] = [
     rarity: Rarity.MYSTIC_RARE,
     stats: { atk: 300, def: 80 },
     // Updated path: ensure 'photo' folder is in the same directory as index.html
-    imageUrl: 'https://i.imgur.com/Cy1eYSv.png', 
+    imageUrl: getAssetPath('memorial', 'card_bunny') || '',
     acquiredDate: '2025년 11월 18일',
     acquiredTime: '13:50:32',
     acquisitionMethod: '세션 세번째 Shuffle로 획득',
@@ -57,7 +58,7 @@ export const INITIAL_SNAPSHOTS: SnapshotEntry[] = [
     rarity: Rarity.UNIQUE,
     stats: { atk: 210, def: 120 },
     // Updated path
-    imageUrl: 'https://i.imgur.com/IfrNu6e.png', 
+    imageUrl: getAssetPath('memorial', 'card_schoolgirl') || '',
     acquiredDate: '2025년 12월 18일',
     acquiredTime: '22:10:52',
     acquisitionMethod: '세션 첫번째 Shuffle로 획득',

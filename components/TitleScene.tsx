@@ -20,13 +20,13 @@ const TitleScene: React.FC<TitleSceneProps> = ({ onStart }) => {
   }, [onStart]);
 
   return (
-    <div 
+    <div
       className="w-full h-full flex flex-col items-center justify-center relative z-50 cursor-pointer"
       onClick={onStart}
     >
       {/* Background Effects */}
       <div className="absolute inset-0 bg-black/40 z-0"></div>
-      
+
       <div className="relative z-10 flex flex-col items-center">
         <div className="mb-8 opacity-0 animate-[fadeIn_2s_ease-out_forwards]">
           <h2 className={`${THEME.fonts.heading} text-botw-gold text-xl tracking-[0.5em] uppercase text-center mb-2`}>

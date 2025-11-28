@@ -36,7 +36,7 @@ const ExtractionScreen: React.FC<ExtractionScreenProps> = ({ onBackToMenu }) => 
             title: '기억 보존',
             description: '현재 덱에서 카드 한 장을 선택하여 다음 런으로 계승합니다.',
             cost: 500,
-            icon: '🎴',
+            icon: '♠️',
             category: 'legacy',
             maxCount: 1
         },

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { THEME } from '../themeConfig';
-import cardBunny from '../memorial/card_bunny.png';
-import cardSchoolgirl from '../memorial/card_schoolgirl.png';
+import { getAssetPath } from '../src/assetConfig';
 
 interface GachaSceneProps {
     onComplete: () => void;
@@ -12,10 +11,10 @@ const GachaScene: React.FC<GachaSceneProps> = ({ onComplete }) => {
     const [revealedItems, setRevealedItems] = useState<number[]>([]);
 
     const items = [
-        { type: 'CHARACTER', name: 'Subject: ALPHA', rarity: 'SSR', color: 'text-botw-gold', image: cardBunny },
+        { type: 'CHARACTER', name: 'Subject: ALPHA', rarity: 'SSR', color: 'text-botw-gold', image: getAssetPath('gacha', 'gacha_alpha') },
         { type: 'GADGET', name: 'Retro Controller', rarity: 'R', color: 'text-botw-blue' },
         { type: 'GADGET', name: 'Save Disk', rarity: 'R', color: 'text-botw-blue' },
-        { type: 'CHARACTER', name: 'Subject: OMEGA', rarity: 'SR', color: 'text-red-400', image: cardSchoolgirl },
+        { type: 'CHARACTER', name: 'Subject: OMEGA', rarity: 'SR', color: 'text-red-400', image: getAssetPath('gacha', 'gacha_omega') },
         { type: 'GADGET', name: 'CRT Module', rarity: 'R', color: 'text-botw-blue' },
     ];
 

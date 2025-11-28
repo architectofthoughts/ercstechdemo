@@ -72,7 +72,23 @@ const App: React.FC = () => {
   const [actPlayStep, setActPlayStep] = useState<'SELECT_ACT' | 'MAP' | 'BATTLE' | 'REWARD'>('SELECT_ACT');
 
   // Playthrough State
+  // Playthrough State
   const [playthroughStep, setPlaythroughStep] = useState<PlaythroughStep>('TITLE');
+
+  // Collapsible Menu State
+  const [openSections, setOpenSections] = useState<Set<string>>(new Set());
+
+  const toggleSection = (section: string) => {
+    setOpenSections(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(section)) {
+        newSet.delete(section);
+      } else {
+        newSet.add(section);
+      }
+      return newSet;
+    });
+  };
 
   // Visual feedback for combat actions
   const [combatLog, setCombatLog] = useState<string | null>(null);
@@ -203,10 +219,10 @@ const App: React.FC = () => {
 
       setTimeout(() => {
         const destinyCard: Card = {
-          id: Date.now(),
-          name: "DESTINY_DRAW",
-          cost: 0,
-          description: "Deal 50 damage. Draw 2 cards.",
+          id: 105,
+          name: "Volley",
+          cost: 2,
+          description: "Deal 4 damage to all enemies.",
           type: CardType.ATTACK
         };
         setCardsInHand([destinyCard]);
@@ -577,6 +593,16 @@ const App: React.FC = () => {
 
       return (
         <div className="w-full h-full flex flex-col items-center pt-24 px-8 relative z-10 max-w-4xl mx-auto overflow-y-auto scrollbar-hide">
+          {/* Main Menu Background */}
+          <div className="fixed inset-0 z-0 pointer-events-none">
+            <img
+              src="/assets/common/title.jpg"
+              alt="Background"
+              className="w-full h-full object-cover opacity-20"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-botw-dark via-botw-dark/80 to-botw-dark"></div>
+          </div>
+
           {/* Header */}
           <div className="text-center mb-16 relative w-full flex-shrink-0">
             {/* Decorative Stars/Lines */}
@@ -629,43 +655,60 @@ const App: React.FC = () => {
               </div>
             )}
 
-            {['Combat Demo', 'Act Map Demo', 'Flow Demo', 'ETC'].map((category) => (
-              <div key={category} className="w-full">
-                <div className="flex items-center gap-4 mb-4 opacity-80">
-                  <div className="h-px flex-1 bg-magical-uiBorder"></div>
-                  <h3 className={`${THEME.fonts.heading} text-magical-gold text-sm tracking-[0.2em] uppercase`}>{category}</h3>
-                  <div className="h-px flex-1 bg-magical-uiBorder"></div>
-                </div>
-
-                <div className="flex flex-col gap-3">
-                  {MODE_CONFIG.filter((m) => m.category === category && m.id !== 'playthrough').map((mode) => (
-                    <div
-                      key={mode.id}
-                      onClick={() => selectDemoMode(mode.id as any)}
-                      className={`group relative w-full py-6 px-8 bg-magical-uiDark/40 border border-magical-uiBorder hover:border-magical-pink hover:bg-magical-uiDark/70 flex items-center cursor-pointer transition-all duration-300 flex-shrink-0`}
-                    >
-                      {/* Content */}
-                      <div className="flex-1 flex flex-col justify-center relative z-10">
-                        <h2 className={`${THEME.fonts.heading} ${THEME.textSizes.cardTitle} ${THEME.colors.primary} group-hover:text-magical-pink transition-colors mb-1`}>
-                          {mode.title}
-                        </h2>
-                        <p className={`${THEME.fonts.body} text-sm text-magical-blue group-hover:text-magical-text transition-colors opacity-70`}>
-                          {mode.description}
-                        </p>
+            {['Combat Demo', 'Act Map Demo', 'Flow Demo', 'ETC'].map((category) => {
+              const isOpen = openSections.has(category);
+              return (
+                <div key={category} className="w-full transition-all duration-300">
+                  {/* Collapsible Header */}
+                  <div
+                    onClick={() => toggleSection(category)}
+                    className="flex items-center gap-4 mb-4 opacity-80 cursor-pointer group select-none"
+                  >
+                    <div className={`h-px flex-1 transition-colors duration-300 ${isOpen ? 'bg-magical-gold' : 'bg-magical-uiBorder'}`}></div>
+                    <div className="flex items-center gap-3">
+                      <h3 className={`${THEME.fonts.heading} ${isOpen ? 'text-magical-gold' : 'text-magical-text'} text-sm tracking-[0.2em] uppercase transition-colors duration-300`}>
+                        {category}
+                      </h3>
+                      <div className={`transform transition-transform duration-300 ${isOpen ? '-rotate-90 text-magical-gold' : 'rotate-90 text-magical-uiBorder'}`}>
+                        <PlayArrowIcon className="w-4 h-4" />
                       </div>
-
-                      {/* Right Side Arrow */}
-                      <div className="pl-6 text-magical-pink opacity-0 group-hover:opacity-100 transform translate-x-[-10px] group-hover:translate-x-0 transition-all duration-300">
-                        <PlayArrowIcon className="w-6 h-6" />
-                      </div>
-
-                      {/* Hover Effect Overlay */}
-                      <div className="absolute inset-0 bg-magical-pink/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
                     </div>
-                  ))}
+                    <div className={`h-px flex-1 transition-colors duration-300 ${isOpen ? 'bg-magical-gold' : 'bg-magical-uiBorder'}`}></div>
+                  </div>
+
+                  {/* Content Grid */}
+                  <div className={`grid transition-all duration-500 ease-in-out overflow-hidden ${isOpen ? 'grid-rows-[1fr] opacity-100 mb-8' : 'grid-rows-[0fr] opacity-0 mb-0'}`}>
+                    <div className="min-h-0 flex flex-col gap-3">
+                      {MODE_CONFIG.filter((m) => m.category === category && m.id !== 'playthrough').map((mode) => (
+                        <div
+                          key={mode.id}
+                          onClick={() => selectDemoMode(mode.id as any)}
+                          className={`group relative w-full py-6 px-8 bg-magical-uiDark/40 border border-magical-uiBorder hover:border-magical-pink hover:bg-magical-uiDark/70 flex items-center cursor-pointer transition-all duration-300 flex-shrink-0`}
+                        >
+                          {/* Content */}
+                          <div className="flex-1 flex flex-col justify-center relative z-10">
+                            <h2 className={`${THEME.fonts.heading} ${THEME.textSizes.cardTitle} ${THEME.colors.primary} group-hover:text-magical-pink transition-colors mb-1`}>
+                              {mode.title}
+                            </h2>
+                            <p className={`${THEME.fonts.body} text-sm text-magical-blue group-hover:text-magical-text transition-colors opacity-70`}>
+                              {mode.description}
+                            </p>
+                          </div>
+
+                          {/* Right Side Arrow */}
+                          <div className="pl-6 text-magical-pink opacity-0 group-hover:opacity-100 transform translate-x-[-10px] group-hover:translate-x-0 transition-all duration-300">
+                            <PlayArrowIcon className="w-6 h-6" />
+                          </div>
+
+                          {/* Hover Effect Overlay */}
+                          <div className="absolute inset-0 bg-magical-pink/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           {/* Footer */}

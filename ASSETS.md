@@ -80,10 +80,40 @@ To add an image, place the file in your project (e.g., `public/assets/...`) and 
 | `9001` | Unique Skill 1 | SKILL |
 | `9002` | Unique Skill 2 | ATTACK |
 
-## 5. Guide Character
+## 5. Memorial
+**Recommended Size**: 2:3 Aspect Ratio (e.g., 400x600px)
+**Usage**: Memorial Snapshot Cards
+
+| ID | Name | Description |
+| :--- | :--- | :--- |
+| `card_bunny` | Subject: ALPHA | Bunny Girl Illustration |
+| `card_schoolgirl` | Subject: OMEGA | Schoolgirl Illustration |
+
+## 6. Gacha
+**Recommended Size**: 2:3 Aspect Ratio (e.g., 400x600px)
+**Usage**: Gacha Result Cards (Can be different from Memorial)
+
+| ID | Name | Description |
+| :--- | :--- | :--- |
+| `gacha_alpha` | Subject: ALPHA | Gacha Result Image |
+| `gacha_omega` | Subject: OMEGA | Gacha Result Image |
+
+## 7. Guide Character
 **Recommended Size**: 1:1 Aspect Ratio (Square) or similar.
 **Usage**: In-game guide subtitle portrait.
 
 | ID | Name | Description |
 | :--- | :--- | :--- |
 | `rumi_portrait` | Rumi | The cute AI robot guide. |
+
+## 8. Reward Cards (Placeholder)
+| ID | Name | Mapped Asset |
+| :--- | :--- | :--- |
+| `801` | Divine Strike | Execute (`305`) |
+| `802` | Ancient Shield | Guard (`203`) |
+| `803` | Time Warp | Flex (`204`) |
+
+## 9. DNA Card (Placeholder)
+| ID | Name | Mapped Asset |
+| :--- | :--- | :--- |
+| `dna_result` | DNA Result | Unique Skill 1 (`9001`) |

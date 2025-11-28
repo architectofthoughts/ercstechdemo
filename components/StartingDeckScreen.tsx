@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { THEME } from '../themeConfig';
 import { Card, CardType } from '../types';
 import { getAssetPath } from '../src/assetConfig';
+import CardComponent from './CardComponent';
 
 interface StartingDeckScreenProps {
     deck: Card[];
@@ -21,43 +22,13 @@ const StartingDeckScreen: React.FC<StartingDeckScreenProps> = ({ deck, onStartGa
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.05 }}
-            className={`
-        relative w-32 h-48 rounded-lg border border-botw-uiBorder bg-botw-uiDark/80 
-        flex flex-col p-2 gap-1 group hover:scale-110 hover:z-10 transition-transform duration-200
-        ${card.type === CardType.ATTACK ? 'shadow-[0_0_10px_rgba(255,62,62,0.2)]' :
-                    card.type === CardType.SKILL ? 'shadow-[0_0_10px_rgba(77,232,254,0.2)]' :
-                        'shadow-[0_0_10px_rgba(226,199,116,0.2)]'}
-      `}
+            className="relative group w-[8rem] h-[12rem]" // Fixed size container for the grid
         >
-            {/* Cost */}
-            <div className="absolute -top-2 -left-2 w-6 h-6 rounded-full bg-botw-blue text-black font-bold flex items-center justify-center text-xs border border-white">
-                {card.cost}
-            </div>
-
-            {/* Image Placeholder */}
-            <div className={`w-full h-20 rounded mb-1 ${card.type === CardType.ATTACK ? 'bg-red-900/40' :
-                card.type === CardType.SKILL ? 'bg-blue-900/40' :
-                    'bg-yellow-900/40'
-                } flex items-center justify-center relative overflow-hidden`}>
-                {getAssetPath('cards', card.id) ? (
-                    <img
-                        src={getAssetPath('cards', card.id)}
-                        alt={card.name}
-                        className="absolute inset-0 w-full h-full object-cover opacity-80"
-                    />
-                ) : (
-                    <span className="text-[0.6rem] opacity-50 uppercase tracking-widest">{CardType[card.type]}</span>
-                )}
-            </div>
-
-            {/* Name */}
-            <div className="text-center">
-                <h4 className="text-xs font-bold text-botw-cream leading-tight">{card.name}</h4>
-            </div>
-
-            {/* Description */}
-            <div className="mt-auto text-[0.6rem] text-zinc-400 leading-tight text-center px-1 pb-1">
-                {card.description}
+            <div className="absolute top-0 left-0 transform origin-top-left scale-[0.66] group-hover:scale-[0.75] group-hover:z-50 transition-all duration-200">
+                <CardComponent
+                    card={card}
+                    playerMana={99} // Always affordable in deck view
+                />
             </div>
         </motion.div>
     );

@@ -1,4 +1,4 @@
-export type AssetCategory = 'cards' | 'events' | 'acts' | 'characters' | 'guide';
+export type AssetCategory = 'cards' | 'events' | 'acts' | 'characters' | 'guide' | 'memorial' | 'gacha';
 
 // Define a type for the asset map where keys are IDs and values are image paths
 type AssetMap = Record<string, string>;
@@ -31,6 +31,13 @@ export const ASSET_IMAGES: Record<AssetCategory, AssetMap> = {
         '905': '/assets/cards/905.png',
         '9001': '/assets/cards/9001.png',
         '9002': '/assets/cards/9002.png',
+
+        // Reward Cards
+        '801': '/assets/cards/305.png', // Divine Strike -> Execute (Placeholder)
+        '802': '/assets/cards/203.png', // Ancient Shield -> Guard (Placeholder)
+        '803': '/assets/cards/204.png', // Time Warp -> Flex (Placeholder)
+        // DNA Card
+        'dna_result': '/assets/cards/9001.png', // DNA Result -> Unique Skill 1 (Placeholder)
     },
     events: {
         'shrine': '/assets/events/shrine.jpg',
@@ -46,6 +53,14 @@ export const ASSET_IMAGES: Record<AssetCategory, AssetMap> = {
     },
     guide: {
         'rumi_portrait': '/assets/common/rumi.jpg',
+    },
+    memorial: {
+        'card_bunny': '/assets/memorial/card_bunny.png',
+        'card_schoolgirl': '/assets/memorial/card_schoolgirl.png',
+    },
+    gacha: {
+        'gacha_alpha': '/assets/memorial/small_bunny.png',
+        'gacha_omega': '/assets/memorial/small_schoolgirl.jpg',
     }
 };
 

@@ -13,9 +13,9 @@ const RewardScreen: React.FC<RewardScreenProps> = ({ onBackToMenu }) => {
 
     // Mock Reward Cards
     const rewardCards: Card[] = [
-        { id: 101, name: "Divine Strike", cost: 2, description: "Deal 30 damage. Heal 10 HP.", type: CardType.ATTACK },
-        { id: 102, name: "Ancient Shield", cost: 1, description: "Gain 20 Block. Draw 1 card.", type: CardType.SKILL },
-        { id: 103, name: "Time Warp", cost: 3, description: "Take an extra turn.", type: CardType.POWER },
+        { id: 801, name: "Divine Strike", cost: 2, description: "Deal 30 damage. Heal 10 HP.", type: CardType.ATTACK },
+        { id: 802, name: "Ancient Shield", cost: 1, description: "Gain 20 Block. Draw 1 card.", type: CardType.SKILL },
+        { id: 803, name: "Time Warp", cost: 3, description: "Take an extra turn.", type: CardType.POWER },
     ];
 
     const handleGoldClick = () => {
@@ -98,7 +98,7 @@ const RewardScreen: React.FC<RewardScreenProps> = ({ onBackToMenu }) => {
                         >
                             <div className="flex items-center gap-4">
                                 <div className="w-12 h-12 rounded-full border border-botw-gold/50 flex items-center justify-center bg-botw-gold/10 group-hover:bg-botw-gold/20 transition-colors">
-                                    <span className="text-2xl">🎴</span>
+                                    <span className="text-2xl">♠️</span>
                                 </div>
                                 <div className="flex flex-col">
                                     <span className="text-botw-cream font-serif text-xl tracking-wide">Add a Card</span>

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { SwordIcon, CampfireIcon, QuestionIcon, SkullIcon, CrownIcon } from './icons';
 
 interface MapNode {
     id: string;
@@ -81,12 +80,12 @@ const MapDemo: React.FC<{ onBackToMenu: () => void, onExtraction?: () => void, o
 
     const getNodeIcon = (type: string) => {
         switch (type) {
-            case 'battle': return <SwordIcon className="w-5 h-5" />;
-            case 'elite': return <SkullIcon className="w-6 h-6" />;
-            case 'event': return <QuestionIcon className="w-5 h-5" />;
-            case 'rest': return <CampfireIcon className="w-5 h-5" />;
-            case 'boss': return <CrownIcon className="w-8 h-8" />;
-            default: return <SwordIcon className="w-5 h-5" />;
+            case 'battle': return <span className="text-xl">⚔️</span>;
+            case 'elite': return <span className="text-xl">👿</span>;
+            case 'event': return <span className="text-xl">❓</span>;
+            case 'rest': return <span className="text-xl">🔥</span>;
+            case 'boss': return <span className="text-2xl">👑</span>;
+            default: return <span className="text-xl">⚔️</span>;
         }
     };
 
@@ -141,10 +140,10 @@ const MapDemo: React.FC<{ onBackToMenu: () => void, onExtraction?: () => void, o
                     <line
                         key={`${parent.id}-${node.id}`}
                         x1={pX} y1={pY} x2={cX} y2={cY}
-                        stroke={isVisitedPath || isNextPath ? "#ffd700" : "#ffd700"}
-                        strokeWidth={isVisitedPath ? "2" : "1"}
-                        strokeDasharray={isVisitedPath ? "0" : "4 4"}
-                        className={isVisitedPath ? "opacity-60" : (isNextPath ? "opacity-80 animate-pulse shadow-magical-glow" : "opacity-30")}
+                        stroke="#ffd700"
+                        strokeWidth="1"
+                        strokeDasharray={isNextPath ? "0" : "4 4"}
+                        className={isVisitedPath ? "opacity-20" : (isNextPath ? "opacity-80 animate-pulse shadow-magical-glow" : "opacity-30")}
                     />
                 );
             }
@@ -230,7 +229,7 @@ const MapDemo: React.FC<{ onBackToMenu: () => void, onExtraction?: () => void, o
                         return (
                             <div
                                 key={node.id}
-                                className={`absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group z-10 ${isLocked ? 'pointer-events-none grayscale opacity-30' : ''}`}
+                                className={`absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group z-10 ${isLocked ? 'pointer-events-none' : ''}`}
                                 style={{ left: x, top: y }}
                                 onMouseEnter={() => setHoveredNode(node)}
                                 onMouseLeave={() => setHoveredNode(null)}
@@ -238,14 +237,20 @@ const MapDemo: React.FC<{ onBackToMenu: () => void, onExtraction?: () => void, o
                             >
                                 {/* Node Visual */}
                                 <div className={`
-                                    rounded-full flex items-center justify-center border-2 transition-all duration-300 bg-magical-uiDark relative
+                                    rounded-full flex items-center justify-center border-2 transition-all duration-300 bg-[#0a0a0a] relative z-20
                                     ${node.type === 'boss' ? 'w-20 h-20 border-magical-pink/50' : 'w-12 h-12 border-magical-gold/50'}
                                     ${isHovered && !isLocked ? 'border-magical-blue shadow-magical-glow scale-110' : 'shadow-[0_0_10px_rgba(255,215,0,0.1)]'}
-                                    ${isVisited ? 'bg-magical-gold/20 border-magical-gold' : ''}
+                                    ${isVisited ? 'border-magical-gold/20' : ''}
                                     ${isCurrent ? 'bg-magical-blue/20 border-magical-blue animate-pulse' : ''}
+                                    ${isLocked ? 'border-zinc-800 grayscale opacity-100' : ''} 
                                  `}>
                                     {/* Inner Icon */}
-                                    <div className={`${isHovered && !isLocked ? 'text-magical-blue' : (node.type === 'boss' ? 'text-magical-pink' : 'text-magical-gold')} transition-colors`}>
+                                    <div className={`
+                                        transition-colors
+                                        ${isHovered && !isLocked ? 'text-magical-blue' : (node.type === 'boss' ? 'text-magical-pink' : 'text-magical-gold')}
+                                        ${isLocked ? 'text-zinc-700' : ''}
+                                        ${isVisited ? 'text-magical-gold/20' : ''}
+                                    `}>
                                         {getNodeIcon(node.type)}
                                     </div>
 

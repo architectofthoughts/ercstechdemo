@@ -18,8 +18,17 @@ const MainMenu: React.FC<MainMenuProps & { disabledItems?: string[] }> = ({ onSt
     ];
 
     return (
-        <div className="w-full h-full flex items-center justify-start pl-24 relative z-40">
-            <div className="flex flex-col gap-6">
+        <div className="w-full h-full flex items-center justify-start pl-24 relative z-40 overflow-hidden">
+            {/* Background Image */}
+            <div className="absolute inset-0 z-0 pointer-events-none">
+                <img
+                    src="/assets/common/title.jpg"
+                    alt="Background"
+                    className="w-full h-full object-cover opacity-20"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-botw-dark via-botw-dark/90 to-botw-dark/40"></div>
+            </div>
+            <div className="flex flex-col gap-6 relative z-10">
                 {menuItems.map((item, index) => {
                     const isDisabled = disabledItems.includes(item.label);
                     return (

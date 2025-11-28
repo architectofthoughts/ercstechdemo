@@ -15,7 +15,7 @@ export enum CardType {
 }
 
 export interface Card {
-  id: number;
+  id: number | string;
   name: string;
   cost: number;
   description: string;

@@ -106,7 +106,7 @@ const CharacterSelectDemo: React.FC<CharacterSelectDemoProps> = ({ onBackToMenu,
     // --- Step 2: DNA Logic ---
     const handleDNAComplete = (dnaInfo: { name: string; description: string }) => {
         const newCard: Card = {
-            id: Date.now(),
+            id: 'dna_result', // Use string ID mapped in assetConfig
             name: dnaInfo.name,
             description: dnaInfo.description,
             cost: 0, // DNA cards might be passive or 0 cost
@@ -259,10 +259,10 @@ const CharacterSelectDemo: React.FC<CharacterSelectDemoProps> = ({ onBackToMenu,
 // Sub-component for the right sidebar slots
 const SelectedSlot: React.FC<{ character?: CharacterEntry, label: string }> = ({ character, label }) => {
     return (
-        <div className="flex-1 relative min-h-0 flex flex-col">
-            <div className="text-xs text-zinc-500 mb-1 font-serif uppercase">{label}</div>
+        <div className="flex-1 relative min-h-0 flex flex-col items-center justify-center">
+            <div className="text-xs text-zinc-500 mb-1 font-serif uppercase w-full text-left">{label}</div>
 
-            <div className={`flex-1 border relative transition-all duration-500 overflow-hidden ${character ? 'border-botw-gold/30 bg-zinc-900' : 'border-dashed border-zinc-800 bg-transparent flex items-center justify-center'}`}>
+            <div className={`relative transition-all duration-500 overflow-hidden aspect-[9/16] h-full ${character ? 'border border-botw-gold/30 bg-zinc-900' : 'border border-dashed border-zinc-800 bg-transparent flex items-center justify-center w-full'}`}>
                 {character ? (
                     <>
                         <img src={getAssetPath('characters', character.id) || character.imageUrl} alt={character.name} className="absolute inset-0 w-full h-full object-cover opacity-60" />
