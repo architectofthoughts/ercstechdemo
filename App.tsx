@@ -11,6 +11,7 @@ import MainMenu from './components/MainMenu';
 import GachaScene from './components/GachaScene';
 import { PlayArrowIcon, PlusIcon, ClockIcon } from './components/icons';
 import { APP_TEXTS, THEME, MODE_CONFIG } from './themeConfig';
+import IntroScene from './components/IntroScene';
 
 import RewardScreen from './components/RewardScreen';
 import ExtractionScreen from './components/ExtractionScreen';
@@ -47,6 +48,7 @@ const SWIPE_VELOCITY_THRESHOLD = -0.5; // px/ms, lower absolute value = easier
 const SWIPE_DISTANCE_THRESHOLD = -50; // px, shorter distance = easier
 
 const App: React.FC = () => {
+  const [showIntro, setShowIntro] = useState(true);
   const [demoMode, setDemoMode] = useState<DemoMode>('select');
   const [gameState, setGameState] = useState<GameState>(GameState.BATTLE_NORMAL);
   const [enemies, setEnemies] = useState<EnemyState[]>(initialEnemies);
@@ -846,6 +848,10 @@ const App: React.FC = () => {
       />
     );
   };
+
+  if (showIntro) {
+    return <IntroScene onComplete={() => setShowIntro(false)} />;
+  }
 
   return (
     <main
