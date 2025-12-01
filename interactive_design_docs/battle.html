@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERCS 기획서 - 전투 시스템</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">ERCS 기획서</div>
+
+        <div class="nav-group">
+            <div class="nav-group-title">게임 흐름</div>
+            <ul class="nav-tree">
+                <li><a href="index.html" class="nav-link">타이틀 화면</a></li>
+                <li>
+                    <a href="main_menu.html" class="nav-link">메인 메뉴</a>
+                    <ul>
+                        <li>
+                            <span class="nav-label">게임 시작</span>
+                            <ul>
+                                <li><a href="character_select.html" class="nav-link">캐릭터 선택</a></li>
+                                <li><a href="act_select.html" class="nav-link">막(Act) 선택</a></li>
+                                <li>
+                                    <a href="map.html" class="nav-link">지도 탐험</a>
+                                    <ul>
+                                        <li>
+                                            <a href="battle.html" class="nav-link active">전투 시스템</a>
+                                            <ul>
+                                                <li><a href="victory_reward.html" class="nav-link">승리 및 보상</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="event.html" class="nav-link">이벤트</a></li>
+                                        <li>
+                                            <a href="act_clear.html" class="nav-link">막 클리어</a>
+                                            <ul>
+                                                <li><a href="extraction.html" class="nav-link">추출(Extraction)</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><a href="gacha.html" class="nav-link">가챠</a></li>
+                        <li><a href="memorial.html" class="nav-link">메모리얼</a></li>
+                        <li><a href="options.html" class="nav-link">옵션</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="nav-group">
+            <div class="nav-group-title">에셋 라이브러리</div>
+            <ul class="nav-tree">
+                <li><a href="assets_index.html" class="nav-link">대시보드</a></li>
+                <li><a href="assets_art.html" class="nav-link">아트</a></li>
+                <li><a href="assets_sound.html" class="nav-link">사운드</a></li>
+                <li><a href="assets_vfx.html" class="nav-link">VFX</a></li>
+                <li><a href="assets_ui.html" class="nav-link">UI</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="container">
+            <div class="scene-header">
+                <div class="scene-title">전투 시스템</div>
+                <div class="scene-subtitle">핵심 게임플레이 루프. 전략, 자원 관리, 그리고 화려한 처형.</div>
+            </div>
+
+            <div class="visuals-grid">
+                <div class="placeholder-box">
+                    <div class="placeholder-label">스크린샷 플레이스홀더</div>
+                    <div class="placeholder-desc">하단에 플레이어 손패. 중앙에 적 스프라이트. 적 머리 위에 의도(Intent) 아이콘. 마나/체력 UI.</div>
+                </div>
+                <div class="placeholder-box">
+                    <div class="placeholder-label">흐름도</div>
+                    <div class="placeholder-desc">
+                        카드 드로우 -> 카드 사용 (마나 소모) -> 턴 종료 -> 적 턴 -> 반복 -> 승리/패배
+                    </div>
+                </div>
+            </div>
+
+            <div class="design-doc">
+                <h2>필요 에셋</h2>
+                <div class="asset-list">
+                    <span class="asset-tag">아트: 카드 프레임 (공격, 스킬, 파워)</span>
+                    <span class="asset-tag">아트: 적 스프라이트 (대기, 공격, 피격)</span>
+                    <span class="asset-tag">UI: 의도 아이콘 (검, 방패, 디버프)</span>
+                    <span class="asset-tag">VFX: 카드 사용 효과 (베기, 방어, 화염)</span>
+                    <span class="asset-tag">VFX: 피날레 폭발</span>
+                    <span class="asset-tag">SFX: 카드 드로우, 셔플, 타격음</span>
+                </div>
+            </div>
+
+            <div class="design-doc">
+                <h2>메카닉</h2>
+                <h3>턴 구조</h3>
+                <ol>
+                    <li><strong>드로우 페이즈:</strong> 카드 5장 드로우. 마나 초기화.</li>
+                    <li><strong>플레이어 턴:</strong> 카드를 사용하여 공격, 방어, 버프 수행.</li>
+                    <li><strong>적 턴:</strong> 적들이 예고된 행동(Intent)을 수행.</li>
+                </ol>
+
+                <h3>특수 시스템</h3>
+                <ul>
+                    <li><strong>피날레:</strong> 적 체력 &lt; 50% 이고 플레이어 마나/카드가 충분할 때, 위로 스와이프하여 처형기 발동.</li>
+                    <li><strong>데스티니 드로우:</strong> 위기 상황에서 손패를 모두 버리고 강력한 "운명의 카드"를 드로우.</li>
+                    <li><strong>물리 효과:</strong> 카드는 물리적 무게감을 가지며 시각적 재미를 위해 회전하거나 던질 수 있음.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+<script src="js/script.js"></script></body>
+
+</html>
+

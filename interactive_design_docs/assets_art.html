@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERCS 기획서 - 아트 에셋</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">ERCS 기획서</div>
+
+        <div class="nav-group">
+            <div class="nav-group-title">게임 흐름</div>
+            <ul class="nav-tree">
+                <li><a href="index.html" class="nav-link">타이틀 화면</a></li>
+                <li>
+                    <a href="main_menu.html" class="nav-link">메인 메뉴</a>
+                    <ul>
+                        <li>
+                            <span class="nav-label">게임 시작</span>
+                            <ul>
+                                <li><a href="character_select.html" class="nav-link">캐릭터 선택</a></li>
+                                <li><a href="act_select.html" class="nav-link">막(Act) 선택</a></li>
+                                <li>
+                                    <a href="map.html" class="nav-link">지도 탐험</a>
+                                    <ul>
+                                        <li>
+                                            <a href="battle.html" class="nav-link">전투 시스템</a>
+                                            <ul>
+                                                <li><a href="victory_reward.html" class="nav-link">승리 및 보상</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="event.html" class="nav-link">이벤트</a></li>
+                                        <li>
+                                            <a href="act_clear.html" class="nav-link">막 클리어</a>
+                                            <ul>
+                                                <li><a href="extraction.html" class="nav-link">추출(Extraction)</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><a href="gacha.html" class="nav-link">가챠</a></li>
+                        <li><a href="memorial.html" class="nav-link">메모리얼</a></li>
+                        <li><a href="options.html" class="nav-link">옵션</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="nav-group">
+            <div class="nav-group-title">에셋 라이브러리</div>
+            <ul class="nav-tree">
+                <li><a href="assets_index.html" class="nav-link">대시보드</a></li>
+                <li><a href="assets_art.html" class="nav-link active">아트</a></li>
+                <li><a href="assets_sound.html" class="nav-link">사운드</a></li>
+                <li><a href="assets_vfx.html" class="nav-link">VFX</a></li>
+                <li><a href="assets_ui.html" class="nav-link">UI</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="container">
+            <div class="scene-header">
+                <div class="scene-title">아트 에셋</div>
+                <div class="scene-subtitle">캐릭터 디자인, 스킨, 카드 프레임.</div>
+            </div>
+
+            <div class="design-doc">
+                <h2>캐릭터 아트</h2>
+                <p>각 캐릭터는 10종의 바리에이션(포즈/표정)과 3종의 스킨이 필요합니다.</p>
+                <div class="visuals-grid" style="grid-template-columns: repeat(3, 1fr);">
+                    <div class="placeholder-box" style="min-height: 200px;">
+                        <div class="placeholder-label">캐릭터 1 (기본)</div>
+                        <div class="placeholder-desc">10종 바리에이션</div>
+                    </div>
+                    <div class="placeholder-box" style="min-height: 200px;">
+                        <div class="placeholder-label">캐릭터 1 (스킨 A)</div>
+                        <div class="placeholder-desc">사이버펑크 테마</div>
+                    </div>
+                    <div class="placeholder-box" style="min-height: 200px;">
+                        <div class="placeholder-label">캐릭터 1 (스킨 B)</div>
+                        <div class="placeholder-desc">판타지 테마</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="design-doc">
+                <h2>카드 프레임</h2>
+                <div class="visuals-grid" style="grid-template-columns: repeat(4, 1fr);">
+                    <div class="placeholder-box" style="min-height: 150px;">
+                        <div class="placeholder-label">공격 프레임</div>
+                        <div class="placeholder-desc">붉은색/공격적</div>
+                    </div>
+                    <div class="placeholder-box" style="min-height: 150px;">
+                        <div class="placeholder-label">스킬 프레임</div>
+                        <div class="placeholder-desc">푸른색/방어적</div>
+                    </div>
+                    <div class="placeholder-box" style="min-height: 150px;">
+                        <div class="placeholder-label">파워 프레임</div>
+                        <div class="placeholder-desc">금색/마법적</div>
+                    </div>
+                    <div class="placeholder-box" style="min-height: 150px;">
+                        <div class="placeholder-label">저주 프레임</div>
+                        <div class="placeholder-desc">보라색/어두움</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script src="js/script.js"></script></body>
+
+</html>
+

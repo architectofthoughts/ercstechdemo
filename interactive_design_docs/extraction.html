@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERCS 기획서 - 추출(Extraction)</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">ERCS 기획서</div>
+
+        <div class="nav-group">
+            <div class="nav-group-title">게임 흐름</div>
+            <ul class="nav-tree">
+                <li><a href="index.html" class="nav-link">타이틀 화면</a></li>
+                <li>
+                    <a href="main_menu.html" class="nav-link">메인 메뉴</a>
+                    <ul>
+                        <li>
+                            <span class="nav-label">게임 시작</span>
+                            <ul>
+                                <li><a href="character_select.html" class="nav-link">캐릭터 선택</a></li>
+                                <li><a href="act_select.html" class="nav-link">막(Act) 선택</a></li>
+                                <li>
+                                    <a href="map.html" class="nav-link">지도 탐험</a>
+                                    <ul>
+                                        <li>
+                                            <a href="battle.html" class="nav-link">전투 시스템</a>
+                                            <ul>
+                                                <li><a href="victory_reward.html" class="nav-link">승리 및 보상</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="event.html" class="nav-link">이벤트</a></li>
+                                        <li>
+                                            <a href="act_clear.html" class="nav-link">막 클리어</a>
+                                            <ul>
+                                                <li><a href="extraction.html" class="nav-link active">추출(Extraction)</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><a href="gacha.html" class="nav-link">가챠</a></li>
+                        <li><a href="memorial.html" class="nav-link">메모리얼</a></li>
+                        <li><a href="options.html" class="nav-link">옵션</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="nav-group">
+            <div class="nav-group-title">에셋 라이브러리</div>
+            <ul class="nav-tree">
+                <li><a href="assets_index.html" class="nav-link">대시보드</a></li>
+                <li><a href="assets_art.html" class="nav-link">아트</a></li>
+                <li><a href="assets_sound.html" class="nav-link">사운드</a></li>
+                <li><a href="assets_vfx.html" class="nav-link">VFX</a></li>
+                <li><a href="assets_ui.html" class="nav-link">UI</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="container">
+            <div class="scene-header">
+                <div class="scene-title">추출 프로토콜</div>
+                <div class="scene-subtitle">유산을 확보하세요. 진행 상황을 영구적인 자원으로 변환합니다.</div>
+            </div>
+
+            <div class="visuals-grid">
+                <div class="placeholder-box">
+                    <div class="placeholder-label">스크린샷 플레이스홀더</div>
+                    <div class="placeholder-desc">하이테크 인터페이스. "추출 점수(EP)" 카운터. EP를 "원시 에테르" 또는 "유산 카드"에 소비하는 옵션.</div>
+                </div>
+                <div class="placeholder-box">
+                    <div class="placeholder-label">흐름도</div>
+                    <div class="placeholder-desc">
+                        막 클리어 / 승리 -> 추출 화면 -> EP 소비 -> 메인 메뉴로 복귀
+                    </div>
+                </div>
+            </div>
+
+            <div class="design-doc">
+                <h2>필요 에셋</h2>
+                <div class="asset-list">
+                    <span class="asset-tag">UI: 홀로그램 인터페이스</span>
+                    <span class="asset-tag">UI: 자원 아이콘 (EP, 에테르)</span>
+                    <span class="asset-tag">VFX: 데이터 업로드 애니메이션</span>
+                    <span class="asset-tag">SFX: 디지털 처리음</span>
+                </div>
+            </div>
+
+            <div class="design-doc">
+                <h2>추출 시스템</h2>
+                <p><strong>추출 점수 (EP):</strong> 처치한 적, 획득한 골드, 클리어한 막에 따라 획득합니다.</p>
+                <p><strong>EP 소비:</strong></p>
+                <ul>
+                    <li><strong>물질 변환:</strong> EP를 원시 에테르(가챠 재화)로 변환합니다.</li>
+                    <li><strong>유산 카드:</strong> 현재 덱에서 카드 1장을 저장하여 다음 런의 시작 덱에 포함시킵니다.</li>
+                    <li><strong>메모리 뱅크:</strong> 나중에 사용하기 위해 EP를 저장합니다.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+<script src="js/script.js"></script></body>
+
+</html>
+
