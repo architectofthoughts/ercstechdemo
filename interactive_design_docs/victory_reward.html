@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERCS 기획서 - 승리 및 보상</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">ERCS 기획서</div>
+
+        <div class="nav-group">
+            <div class="nav-group-title">게임 흐름</div>
+            <ul class="nav-tree">
+                <li><a href="index.html" class="nav-link">타이틀 화면</a></li>
+                <li>
+                    <a href="main_menu.html" class="nav-link">메인 메뉴</a>
+                    <ul>
+                        <li>
+                            <span class="nav-label">게임 시작</span>
+                            <ul>
+                                <li><a href="character_select.html" class="nav-link">캐릭터 선택</a></li>
+                                <li><a href="act_select.html" class="nav-link">막(Act) 선택</a></li>
+                                <li>
+                                    <a href="map.html" class="nav-link">지도 탐험</a>
+                                    <ul>
+                                        <li>
+                                            <a href="battle.html" class="nav-link">전투 시스템</a>
+                                            <ul>
+                                                <li><a href="victory_reward.html" class="nav-link active">승리 및 보상</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="event.html" class="nav-link">이벤트</a></li>
+                                        <li>
+                                            <a href="act_clear.html" class="nav-link">막 클리어</a>
+                                            <ul>
+                                                <li><a href="extraction.html" class="nav-link">추출(Extraction)</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><a href="gacha.html" class="nav-link">가챠</a></li>
+                        <li><a href="memorial.html" class="nav-link">메모리얼</a></li>
+                        <li><a href="options.html" class="nav-link">옵션</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="nav-group">
+            <div class="nav-group-title">에셋 라이브러리</div>
+            <ul class="nav-tree">
+                <li><a href="assets_index.html" class="nav-link">대시보드</a></li>
+                <li><a href="assets_art.html" class="nav-link">아트</a></li>
+                <li><a href="assets_sound.html" class="nav-link">사운드</a></li>
+                <li><a href="assets_vfx.html" class="nav-link">VFX</a></li>
+                <li><a href="assets_ui.html" class="nav-link">UI</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="container">
+            <div class="scene-header">
+                <div class="scene-title">승리 및 보상</div>
+                <div class="scene-subtitle">전리품을 획득합니다. 덱을 강화하기 위해 신중하게 선택하세요.</div>
+            </div>
+
+            <div class="visuals-grid">
+                <div class="placeholder-box">
+                    <div class="placeholder-label">스크린샷 플레이스홀더</div>
+                    <div class="placeholder-desc">"VICTORY" 배너. 3장의 카드 선택지 표시. 하단에 골드/포션 보상 목록.</div>
+                </div>
+                <div class="placeholder-box">
+                    <div class="placeholder-label">흐름도</div>
+                    <div class="placeholder-desc">
+                        전투 종료 -> 승리 화면 -> 카드 보상 선택 -> 지도로 복귀
+                    </div>
+                </div>
+            </div>
+
+            <div class="design-doc">
+                <h2>필요 에셋</h2>
+                <div class="asset-list">
+                    <span class="asset-tag">UI: 승리 배너</span>
+                    <span class="asset-tag">UI: 카드 보상 컨테이너</span>
+                    <span class="asset-tag">UI: 골드/아이템 아이콘</span>
+                    <span class="asset-tag">SFX: 승리 팡파레</span>
+                    <span class="asset-tag">SFX: 보상 획득음</span>
+                </div>
+            </div>
+
+            <div class="design-doc">
+                <h2>보상 유형</h2>
+                <ul>
+                    <li><strong>카드 보상:</strong> 무작위 카드 3장 중 1장을 선택하여 덱에 추가.</li>
+                    <li><strong>골드:</strong> 상점에서 사용하는 화폐.</li>
+                    <li><strong>포션:</strong> 전투 중 사용하는 소모품.</li>
+                    <li><strong>유물 (정예/보스):</strong> 강력한 패시브 아티팩트.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+<script src="js/script.js"></script></body>
+
+</html>
+

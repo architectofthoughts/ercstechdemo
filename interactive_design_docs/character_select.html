@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERCS 기획서 - 캐릭터 선택</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">ERCS 기획서</div>
+
+        <div class="nav-group">
+            <div class="nav-group-title">게임 흐름</div>
+            <ul class="nav-tree">
+                <li><a href="index.html" class="nav-link">타이틀 화면</a></li>
+                <li>
+                    <a href="main_menu.html" class="nav-link">메인 메뉴</a>
+                    <ul>
+                        <li>
+                            <span class="nav-label">게임 시작</span>
+                            <ul>
+                                <li><a href="character_select.html" class="nav-link active">캐릭터 선택</a></li>
+                                <li><a href="act_select.html" class="nav-link">막(Act) 선택</a></li>
+                                <li>
+                                    <a href="map.html" class="nav-link">지도 탐험</a>
+                                    <ul>
+                                        <li>
+                                            <a href="battle.html" class="nav-link">전투 시스템</a>
+                                            <ul>
+                                                <li><a href="victory_reward.html" class="nav-link">승리 및 보상</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="event.html" class="nav-link">이벤트</a></li>
+                                        <li>
+                                            <a href="act_clear.html" class="nav-link">막 클리어</a>
+                                            <ul>
+                                                <li><a href="extraction.html" class="nav-link">추출(Extraction)</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><a href="gacha.html" class="nav-link">가챠</a></li>
+                        <li><a href="memorial.html" class="nav-link">메모리얼</a></li>
+                        <li><a href="options.html" class="nav-link">옵션</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="nav-group">
+            <div class="nav-group-title">에셋 라이브러리</div>
+            <ul class="nav-tree">
+                <li><a href="assets_index.html" class="nav-link">대시보드</a></li>
+                <li><a href="assets_art.html" class="nav-link">아트</a></li>
+                <li><a href="assets_sound.html" class="nav-link">사운드</a></li>
+                <li><a href="assets_vfx.html" class="nav-link">VFX</a></li>
+                <li><a href="assets_ui.html" class="nav-link">UI</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="container">
+            <div class="scene-header">
+                <div class="scene-title">캐릭터 선택</div>
+                <div class="scene-subtitle">요원(Agent)을 선택하고, DNA를 설정하며, 시작 덱을 미리 봅니다.</div>
+            </div>
+
+            <div class="visuals-grid">
+                <div class="placeholder-box">
+                    <div class="placeholder-label">스크린샷 플레이스홀더</div>
+                    <div class="placeholder-desc">중앙에 3D/2D 캐릭터 회전목마. 좌측에 스탯/소개. 우측에 DNA/덱 옵션.</div>
+                </div>
+                <div class="placeholder-box">
+                    <div class="placeholder-label">흐름도</div>
+                    <div class="placeholder-desc">
+                        요원 선택 -> DNA 설정 -> 덱 미리보기 -> 확정 -> 막(Act) 선택
+                    </div>
+                </div>
+            </div>
+
+            <div class="design-doc">
+                <h2>필요 에셋</h2>
+                <div class="asset-list">
+                    <span class="asset-tag">아트: 캐릭터 전신 일러스트</span>
+                    <span class="asset-tag">UI: 스탯 아이콘 (체력, 마나 등)</span>
+                    <span class="asset-tag">UI: DNA 나선 시각화</span>
+                    <span class="asset-tag">UI: 카드 미리보기 툴팁</span>
+                    <span class="asset-tag">SFX: 캐릭터 선택 음성</span>
+                </div>
+            </div>
+
+            <div class="design-doc">
+                <h2>시스템 상세</h2>
+                <h3>캐릭터 선택</h3>
+                <p>플레이어는 해금된 요원 중 하나를 선택합니다. 각 요원은 고유한 시작 스탯과 시그니처 카드를 가집니다.</p>
+
+                <h3>DNA 시스템</h3>
+                <p>패시브 특성을 시각적으로 표현합니다. 플레이어는 DNA 구조를 분석하고(향후 업데이트에서 수정 가능) 시작 보너스를 변경할 수 있습니다.</p>
+
+                <h3>덱 미리보기</h3>
+                <p>시작 덱 구성을 확인합니다. 런을 시작하기 전 전략적 계획을 세우는 데 중요합니다.</p>
+            </div>
+        </div>
+    </div>
+<script src="js/script.js"></script></body>
+
+</html>
+

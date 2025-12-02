@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERCS 기획서 - 메인 메뉴</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">ERCS 기획서</div>
+
+        <div class="nav-group">
+            <div class="nav-group-title">게임 흐름</div>
+            <ul class="nav-tree">
+                <li><a href="index.html" class="nav-link">타이틀 화면</a></li>
+                <li>
+                    <a href="main_menu.html" class="nav-link active">메인 메뉴</a>
+                    <ul>
+                        <li>
+                            <span class="nav-label">게임 시작</span>
+                            <ul>
+                                <li><a href="character_select.html" class="nav-link">캐릭터 선택</a></li>
+                                <li><a href="act_select.html" class="nav-link">막(Act) 선택</a></li>
+                                <li>
+                                    <a href="map.html" class="nav-link">지도 탐험</a>
+                                    <ul>
+                                        <li>
+                                            <a href="battle.html" class="nav-link">전투 시스템</a>
+                                            <ul>
+                                                <li><a href="victory_reward.html" class="nav-link">승리 및 보상</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="event.html" class="nav-link">이벤트</a></li>
+                                        <li>
+                                            <a href="act_clear.html" class="nav-link">막 클리어</a>
+                                            <ul>
+                                                <li><a href="extraction.html" class="nav-link">추출(Extraction)</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><a href="gacha.html" class="nav-link">가챠</a></li>
+                        <li><a href="memorial.html" class="nav-link">메모리얼</a></li>
+                        <li><a href="options.html" class="nav-link">옵션</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="nav-group">
+            <div class="nav-group-title">에셋 라이브러리</div>
+            <ul class="nav-tree">
+                <li><a href="assets_index.html" class="nav-link">대시보드</a></li>
+                <li><a href="assets_art.html" class="nav-link">아트</a></li>
+                <li><a href="assets_sound.html" class="nav-link">사운드</a></li>
+                <li><a href="assets_vfx.html" class="nav-link">VFX</a></li>
+                <li><a href="assets_ui.html" class="nav-link">UI</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="container">
+            <div class="scene-header">
+                <div class="scene-title">메인 메뉴</div>
+                <div class="scene-subtitle">게임을 시작하고 메타 시스템에 접근하는 중앙 허브.</div>
+            </div>
+
+            <div class="visuals-grid">
+                <div class="placeholder-box">
+                    <div class="placeholder-label">스크린샷 플레이스홀더</div>
+                    <div class="placeholder-desc">좌/우측에 메뉴 옵션 배치. 중앙에 캐릭터/배경 아트. 동적인 카메라 움직임.</div>
+                </div>
+                <div class="placeholder-box">
+                    <div class="placeholder-label">흐름도</div>
+                    <div class="placeholder-desc">
+                        작전 시작 -> 캐릭터 선택<br>
+                        메모리얼 -> 메모리얼 앱<br>
+                        가챠 -> 가챠 씬<br>
+                        옵션 -> 설정 오버레이<br>
+                        종료 -> 데스크탑
+                    </div>
+                </div>
+            </div>
+
+            <div class="design-doc">
+                <h2>필요 에셋</h2>
+                <div class="asset-list">
+                    <span class="asset-tag">BGM: 메인 메뉴 테마 (차분함, 기대감)</span>
+                    <span class="asset-tag">UI: 메뉴 버튼 (시작, 메모리얼, 가챠, 옵션, 종료)</span>
+                    <span class="asset-tag">아트: 동적 배경</span>
+                    <span class="asset-tag">SFX: 메뉴 이동/선택</span>
+                </div>
+            </div>
+
+            <div class="design-doc">
+                <h2>디자인 언어</h2>
+                <p><strong>테마:</strong> SF + 판타지 (마법 공학)</p>
+                <p><strong>색상:</strong> 딥 다크 블루/블랙 (배경), 매지컬 골드 (강조), 네온 핑크/블루 (효과)</p>
+                <p><strong>타이포그래피:</strong> 가독성 좋은 고딕체 + 장식적인 헤드라인.</p>
+
+                <h3>인터랙션</h3>
+                <ul>
+                    <li><strong>마이크로 애니메이션:</strong> 버튼 호버 효과, 텍스트 타이핑 효과.</li>
+                    <li><strong>전환:</strong> 메뉴 간 부드러운 페이드인 및 슬라이드 전환.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+<script src="js/script.js"></script></body>
+
+</html>
+
